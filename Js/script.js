@@ -59,6 +59,15 @@ const validarCarta = (card) =>{
         alert ("¡El valor ingresado es incorrecto, probá otra vez!");
     }
 }
+
+//Función para decir si se ganó o no
+const whiteJack = (sumador)=> {   
+    if (sumador===21) {
+        return "¡White Jack!";
+    }else {
+        return "¡Perdiste!";
+    }
+};
 //Función para determinar si se termina el juego o no.
 const terminar = () =>{
     let sigue = true;
@@ -91,11 +100,9 @@ while (jugando) {
     }
 
     alert (`Ingresaste: ${contadorCartas} cartas.`);
-    if (sumadorCartas===21) {
-        alert ("¡White Jack!");
-    }else {
-        alert ("¡Perdiste!");
-    }
+    alert (whiteJack(sumadorCartas));
+
+
 //Se crea un objeto con los datos de la jugada
     const jugada1 = new Jugada (usuario, contadorCartas, sumadorCartas);
 //Se llama al método para guardar si se ganó o no
