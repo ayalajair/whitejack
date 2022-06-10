@@ -114,7 +114,7 @@ while (jugando) {
     contadorCartas = 0;
     sumadorCartas = 0;
 }
-//Se muestra el Array con el historial de los juegos que el jugador realizó consecutivamente
+//Se muestra el Array en la consola con el historial de los juegos que el jugador realizó consecutivamente
 historialJugadas.forEach ( lista =>{
     console.log (`En esta jugada ${lista.jugadas()}`);
 });
