@@ -30,7 +30,7 @@ class Jugada {
         };
     };
     jugadas () {
-        return `${this.usuario} jugó ${this.cantCartas}, hizo ${this.puntaje} y ${this.resultado}`;
+        return `${this.usuario} scacó ${this.cantCartas} cartas, sumó ${this.puntaje} y ${this.resultado}`;
     }
 };
 
