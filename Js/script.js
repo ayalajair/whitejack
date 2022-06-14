@@ -1,7 +1,7 @@
 //El programa es una especie de BlackJack, primero se le pide al usuario que ingrese su nickname o apodo
 //Se le da la bienvenida.
-//Luego se le pide al usuario que ingrese numeros de cartas entre el 1 y el 10.
-//Se van sumando las cartas y el programa termina cuando se alcanza o se pasa el número 21.
+//Luego se le pide al usuario que saque cartas que estarán entre el 1 y el 10.
+//Se van sumando las cartas y el programa termina cuando se alcanza o se pasa el número 21, o si el usuario se retiró.
 //Luego de terminado el ciclo se informa la cantidad de cartas ingresadas.
 //Si la suma da justo 21, se informa por alerta ¡White Jack!
 //Si se pasa de 21, se informa por alerta: ¡Perdiste!
@@ -19,18 +19,20 @@ class Jugada {
         this.cantCartas = cantCartas;
         this.puntaje = puntaje;
 //por defecto queda como que el usuario perdió
-        this.resultado="Perdió";
+        this.resultado="Se retiró";
         this.resumen
     }
 //Metodo que se fija si el Usuario perdio o no, hay que ejecutar antes de guardar en el array
     whiteJack() {
-        if (this.puntaje === 21)
-        {
+        if (this.puntaje === 21){
         this.resultado = "¡Ganó!";
+        }
+        else if (this.puntaje >= 21){
+            this.resultado = "Perdió";
         };
     };
     jugadas () {
-        return `${this.usuario} scacó ${this.cantCartas} cartas, sumó ${this.puntaje} y ${this.resultado}`;
+        return `${this.usuario} sacó ${this.cantCartas} cartas, sumó ${this.puntaje} y ${this.resultado}`;
     }
 };
 
@@ -55,10 +57,10 @@ const sumarCarta = (card) =>{
         contadorCartas++;
 }
 
-const retira = () => {
+const retira = (suma) => {
     let marcha = true;
     while (marcha) {
-        let sino = prompt ("Querés sacar otra carta? (S/N")
+        let sino = prompt (`Tenés ${suma} puntos, querés sacar otra carta? (S/N)`)
         switch (sino) {
             case "s": 
                 return true;
@@ -113,7 +115,7 @@ let termina = true;
         carta = Math.floor((Math.random()*10)+1)
         alert (`Sacaste un ${carta}`);
         sumarCarta (carta);
-        termina = retira ();
+        termina = retira (sumadorCartas);
     }
 
     alert (`Ingresaste: ${contadorCartas} cartas.`);
@@ -124,6 +126,7 @@ let termina = true;
     const jugada1 = new Jugada (usuario, contadorCartas, sumadorCartas);
 //Se llama al método para guardar si se ganó o no
     jugada1.whiteJack();
+    judada1.resumen = jugada1.jugadas();
 //Se guarda el objeto en el array
     historialJugadas.push (jugada1);
 //Se llama a la funcion terminar para ver si el juego continua
