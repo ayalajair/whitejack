@@ -49,16 +49,29 @@ const ingresoUsuario = () =>{
         }
     }
 }
-//Función que para validar las cartas, si la carta es valida, realiza las operaciones pertinentes del ciclo.
-const validarCarta = (card) =>{
-    if (card>=1 && card<=10) {
+//Función sumar las cartas, realiza las operaciones pertinentes del ciclo.
+const sumarCarta = (card) =>{
         sumadorCartas = sumadorCartas + card;
         contadorCartas++;
-    }    
-    else {
-        alert ("¡El valor ingresado es incorrecto, probá otra vez!");
-    }
 }
+
+const retira = () => {
+    let marcha = true;
+    while (marcha) {
+        let sino = prompt ("Querés sacar otra carta? (S/N")
+        switch (sino) {
+            case "s": 
+                return true;
+            case "S":
+                return true;
+            case "n":
+                return false;
+            case "N":
+                return false;
+            default:
+                alert ("Ingrese una opción válida");
+            }}}
+
 
 //Función para decir si se ganó o no
 const whiteJack = (sumador)=> {   
@@ -68,7 +81,7 @@ const whiteJack = (sumador)=> {
         return "¡Perdiste!";
     }
 };
-//Función para determinar si se termina el juego o no.
+//Función para determinar si se termina el juego o no. 
 const terminar = () =>{
     let sigue = true;
     while (sigue){
@@ -93,10 +106,14 @@ alert (`¡Hola ${usuario}, bienvenido al White Jack!`);
 let jugando = true;
 while (jugando) {
 //La partida sigue mientras que la suma de las cartas sea menor a 21
-//Aca agregar  Math.round(Math.random()*10) para generar cartas aleatorias
-    while (sumadorCartas<21) {
-        carta = Number(prompt("Ingresá el valor de tu carta del 1 al 10: "));
-        validarCarta (carta);
+//se empiezan a generar cartas aleatorias entre 1 y 10
+//Se invoca a la funcion sumar carta, y luego a la funcion retira para ver si el jugador se retira o no
+let termina = true;
+    while (sumadorCartas<21 && termina) {
+        carta = Math.floor((Math.random()*10)+1)
+        alert (`Sacaste un ${carta}`);
+        sumarCarta (carta);
+        termina = retira ();
     }
 
     alert (`Ingresaste: ${contadorCartas} cartas.`);
@@ -115,6 +132,7 @@ while (jugando) {
     sumadorCartas = 0;
 }
 //Se muestra el Array en la consola con el historial de los juegos que el jugador realizó consecutivamente
+//Se cuenta cuantas veces el jugador ganó y se informa
 historialJugadas.forEach ( lista =>{
     console.log (`En esta jugada ${lista.jugadas()}`);
 });
