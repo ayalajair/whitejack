@@ -146,5 +146,11 @@ historialJugadas.forEach ( lista =>{
 const ganadas = historialJugadas.filter(jugada => jugada.puntaje === 21);
 alert (`Ganaste ${ganadas.length} juego/s`);
 
+const totalPuntaje = historialJugadas.reduce((total, jugada) => total + jugada.puntaje,
+    0
+    );
+alert (`Sumaste ${totalPuntaje} puntos`);
+
+
 
 
