@@ -111,10 +111,13 @@ while (jugando) {
 //se empiezan a generar cartas aleatorias entre 1 y 10
 //Se invoca a la funcion sumar carta, y luego a la funcion retira para ver si el jugador se retira o no
 let termina = true;
-    while (sumadorCartas<21 && termina) {
+    while (termina) {
         carta = Math.floor((Math.random()*10)+1)
         alert (`Sacaste un ${carta}`);
         sumarCarta (carta);
+        if (sumadorCartas >= 21){
+            break;
+        }
         termina = retira (sumadorCartas);
     }
 
