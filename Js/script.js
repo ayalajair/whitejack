@@ -105,6 +105,7 @@ const terminar = () =>{
 //Programa principal
 let usuario = ingresoUsuario();
 alert (`¡Hola ${usuario}, bienvenido al White Jack!`);
+alert (`¡Empecemos a jugar!`)
 let jugando = true;
 while (jugando) {
 //La partida sigue mientras que la suma de las cartas sea menor a 21
@@ -129,7 +130,7 @@ let termina = true;
     const jugada1 = new Jugada (usuario, contadorCartas, sumadorCartas);
 //Se llama al método para guardar si se ganó o no
     jugada1.whiteJack();
-    judada1.resumen = jugada1.jugadas();
+    jugada1.resumen = jugada1.jugadas();
 //Se guarda el objeto en el array
     historialJugadas.push (jugada1);
 //Se llama a la funcion terminar para ver si el juego continua
@@ -142,3 +143,8 @@ let termina = true;
 historialJugadas.forEach ( lista =>{
     console.log (`En esta jugada ${lista.jugadas()}`);
 });
+const ganadas = historialJugadas.filter(jugada => jugada.puntaje === 21);
+alert (`Ganaste ${ganadas.length} juego/s`);
+
+
+
