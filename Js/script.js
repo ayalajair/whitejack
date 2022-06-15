@@ -56,7 +56,7 @@ const sumarCarta = (card) =>{
         sumadorCartas = sumadorCartas + card;
         contadorCartas++;
 }
-
+//Función para ver si el jugador se retira o no.
 const retira = (suma) => {
     let marcha = true;
     while (marcha) {
@@ -108,9 +108,10 @@ alert (`¡Hola ${usuario}, bienvenido al White Jack!`);
 alert (`¡Empecemos a jugar!`)
 let jugando = true;
 while (jugando) {
-//La partida sigue mientras que la suma de las cartas sea menor a 21
+//La partida sigue mientras el jugador no se retire
 //se empiezan a generar cartas aleatorias entre 1 y 10
 //Se invoca a la funcion sumar carta, y luego a la funcion retira para ver si el jugador se retira o no
+//Cuando la suma de las cartas es igual a 21 o mas termina el juego automaticamente
 let termina = true;
     while (termina) {
         carta = Math.floor((Math.random()*10)+1)
@@ -121,8 +122,9 @@ let termina = true;
         }
         termina = retira (sumadorCartas);
     }
-
+//se informa la cantidad de cartas ingresadas
     alert (`Ingresaste: ${contadorCartas} cartas.`);
+//se llama a la funcion para ver si es whiteJack
     alert (whiteJack(sumadorCartas));
 
 
@@ -143,9 +145,11 @@ let termina = true;
 historialJugadas.forEach ( lista =>{
     console.log (`En esta jugada ${lista.jugadas()}`);
 });
+//Se filtran las partidas ganadas, se guardan en un array y se contabilizan
 const ganadas = historialJugadas.filter(jugada => jugada.puntaje === 21);
 alert (`Ganaste ${ganadas.length} juego/s`);
 
+//Se suman todos los puntajes de las jugadas, se guardan en un array y se informan
 const totalPuntaje = historialJugadas.reduce((total, jugada) => total + jugada.puntaje,
     0
     );
