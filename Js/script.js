@@ -51,6 +51,13 @@ const ingresoUsuario = () =>{
         }
     }
 }
+//Función para dar un mensaje de bienvenida en el HTML (Arreglar)
+const bienvenidaHtml = (nombre) => {
+    document.querySelector (`.bienvenida`).textContent = `Hola ${nombre}! Vamos a jugar al White Jack!`;
+    
+};
+
+
 //Función sumar las cartas, realiza las operaciones pertinentes del ciclo.
 const sumarCarta = (card) =>{
         sumadorCartas = sumadorCartas + card;
@@ -75,7 +82,7 @@ const retira = (suma) => {
             }}}
 
 
-//Función para decir si se ganó o no
+//Función para decir si se ganó o no (arreglar)
 const whiteJack = (sumador)=> {   
     if (sumador===21) {
         return "¡White Jack!";
@@ -104,6 +111,7 @@ const terminar = () =>{
 
 //Programa principal
 let usuario = ingresoUsuario();
+bienvenidaHtml (usuario);
 alert (`¡Hola ${usuario}, bienvenido al White Jack!`);
 alert (`¡Empecemos a jugar!`)
 let jugando = true;
