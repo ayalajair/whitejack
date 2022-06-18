@@ -53,8 +53,9 @@ const ingresoUsuario = () =>{
 }
 //Función para dar un mensaje de bienvenida en el HTML (Arreglar)
 const bienvenidaHtml = (nombre) => {
-    document.querySelector (`.bienvenida`).textContent = `Hola ${nombre}! Vamos a jugar al White Jack!`;
-    
+    const bienvenida = document.querySelector (`#bienvenida`) 
+    bienvenida.innerHTML = `<h1> Hola ${nombre}! Vamos a jugar al White Jack!</h1>`;
+    return
 };
 
 
@@ -112,7 +113,6 @@ const terminar = () =>{
 //Programa principal
 let usuario = ingresoUsuario();
 bienvenidaHtml (usuario);
-alert (`¡Hola ${usuario}, bienvenido al White Jack!`);
 alert (`¡Empecemos a jugar!`)
 let jugando = true;
 while (jugando) {
@@ -150,9 +150,16 @@ let termina = true;
 }
 //Se muestra el Array en la consola con el historial de los juegos que el jugador realizó consecutivamente
 //Se cuenta cuantas veces el jugador ganó y se informa
-historialJugadas.forEach ( lista =>{
-    console.log (`En esta jugada ${lista.jugadas()}`);
-});
+const tituloHistorial = document.querySelector (`#rondas`);
+tituloHistorial.innerHTML = (`Historial de Jugadas: `);
+const jugadas = document.querySelector (`#jugadas`);
+for (element of historialJugadas) {
+    let jugada = document.createElement (`li`);
+    jugada.innerHTML = `En esta jugada ${element.jugadas()}`
+    jugadas.append(jugada);
+}
+
+
 //Se filtran las partidas ganadas, se guardan en un array y se contabilizan
 const ganadas = historialJugadas.filter(jugada => jugada.puntaje === 21);
 alert (`Ganaste ${ganadas.length} juego/s`);
