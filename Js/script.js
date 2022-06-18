@@ -162,13 +162,16 @@ for (element of historialJugadas) {
 
 //Se filtran las partidas ganadas, se guardan en un array y se contabilizan
 const ganadas = historialJugadas.filter(jugada => jugada.puntaje === 21);
-alert (`Ganaste ${ganadas.length} juego/s`);
+const ganados = document.querySelector (`#ganados`);
+const cuentaJuegos = document.createElement (`p`);
+cuentaJuegos.innerHTML = `Ganaste ${ganadas.length} juego/s`;
+ganados.append (cuentaJuegos);
 
 //Se suman todos los puntajes de las jugadas, se guardan en un array y se informan
-const totalPuntaje = historialJugadas.reduce((total, jugada) => total + jugada.puntaje,
-    0
-    );
-alert (`Sumaste ${totalPuntaje} puntos`);
+const totalPuntaje = historialJugadas.reduce((total, jugada) => total + jugada.puntaje,0);
+const muestraPuntaje = document.createElement (`h3`);
+muestraPuntaje.innerHTML = `Sumaste ${totalPuntaje} puntos`;
+ganados.append (muestraPuntaje);
 
 
 
