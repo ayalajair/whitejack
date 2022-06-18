@@ -110,6 +110,33 @@ const terminar = () =>{
             }  }    
 }
 
+//Función que realiza el informe final del total de las partidas
+
+const informeFinal = (informe)=> {
+    //Se muestra el Array en la consola con el historial de los juegos que el jugador realizó consecutivamente
+//Se cuenta cuantas veces el jugador ganó y se informa
+const tituloHistorial = document.querySelector (`#rondas`);
+tituloHistorial.innerHTML = (`Historial de Jugadas: `);
+const jugadas = document.querySelector (`#jugadas`);
+for (element of informe) {
+    let jugada = document.createElement (`li`);
+    jugada.innerHTML = `En esta jugada ${element.jugadas()}`
+    jugadas.append(jugada);
+}
+//Se filtran las partidas ganadas, se guardan en un array y se contabilizan
+const ganadas = informe.filter(jugada => jugada.puntaje === 21);
+const ganados = document.querySelector (`#ganados`);
+const cuentaJuegos = document.createElement (`p`);
+cuentaJuegos.innerHTML = `Ganaste ${ganadas.length} juego/s`;
+ganados.append (cuentaJuegos);
+//Se suman todos los puntajes de las jugadas, se guardan en un array y se informan
+const totalPuntaje = informe.reduce((total, jugada) => total + jugada.puntaje,0);
+const muestraPuntaje = document.createElement (`h3`);
+muestraPuntaje.innerHTML = `Sumaste ${totalPuntaje} puntos`;
+ganados.append (muestraPuntaje);
+//Juntar estos dos y hacer una funcion.
+}
+
 //Programa principal
 let usuario = ingresoUsuario();
 bienvenidaHtml (usuario);
@@ -148,30 +175,11 @@ let termina = true;
     contadorCartas = 0;
     sumadorCartas = 0;
 }
-//Se muestra el Array en la consola con el historial de los juegos que el jugador realizó consecutivamente
-//Se cuenta cuantas veces el jugador ganó y se informa
-const tituloHistorial = document.querySelector (`#rondas`);
-tituloHistorial.innerHTML = (`Historial de Jugadas: `);
-const jugadas = document.querySelector (`#jugadas`);
-for (element of historialJugadas) {
-    let jugada = document.createElement (`li`);
-    jugada.innerHTML = `En esta jugada ${element.jugadas()}`
-    jugadas.append(jugada);
-}
+//Se llama a un funcion para hacer el informe final del total de partidas
+informeFinal (historialJugadas);
 
 
-//Se filtran las partidas ganadas, se guardan en un array y se contabilizan
-const ganadas = historialJugadas.filter(jugada => jugada.puntaje === 21);
-const ganados = document.querySelector (`#ganados`);
-const cuentaJuegos = document.createElement (`p`);
-cuentaJuegos.innerHTML = `Ganaste ${ganadas.length} juego/s`;
-ganados.append (cuentaJuegos);
 
-//Se suman todos los puntajes de las jugadas, se guardan en un array y se informan
-const totalPuntaje = historialJugadas.reduce((total, jugada) => total + jugada.puntaje,0);
-const muestraPuntaje = document.createElement (`h3`);
-muestraPuntaje.innerHTML = `Sumaste ${totalPuntaje} puntos`;
-ganados.append (muestraPuntaje);
 
 
 
