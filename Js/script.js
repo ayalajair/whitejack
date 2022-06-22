@@ -7,6 +7,8 @@
 //Si se pasa de 21, se informa por alerta: ¡Perdiste!
 //Terminado el juego te pregunta si queres jugar otra vez
 //Si aceptas arranca nuevamente el juego, Si no aceptas te muestra una lista de las jugadas realizadas
+
+//Variables
 let sumadorCartasJugador = 0;
 let sumadorCartasCasino = 0;
 let contadorCartas= 0;
@@ -15,12 +17,15 @@ let arrayCartasJugador = [];
 let arrayCartasCasino = [];
 let usuario
 
+//DOM
 const ingreso = document.querySelector (`#ingreso`);
 const nombre = document.querySelector (`#nombre`);
 const bienvenida = document.querySelector (`#bienvenida`);
 const inicio = document.querySelector (`#mensajeInicio`);
 const botonInicio = document.querySelector(`#botonInicio`);
 const botonReinicio = document.querySelector (`#botonReinicio`);
+const cartasCasino = document.querySelector (`#cartasCasino`);
+const cartasJugador = document.querySelector (`#cartasJugador`);
 //Array que contendrá el historial de jugadas
 const historialJugadas =[];
 //Clase de los objetos que se almacenarán en el Array
@@ -99,10 +104,7 @@ for (element of informe) {
     let jugada = document.createElement (`li`);
     jugada.innerHTML = `En esta jugada ${element.jugadas()}`
     jugadas.append(jugada);
-
 }
-
-
 //Se filtran las partidas ganadas, se guardan en un array y se contabilizan
 const ganadas = informe.filter(jugada => jugada.puntaje === 21);
 const ganados = document.querySelector (`#ganados`);
@@ -114,7 +116,6 @@ const totalPuntaje = informe.reduce((total, jugada) => total + jugada.puntaje,0)
 const muestraPuntaje = document.createElement (`h3`);
 muestraPuntaje.innerHTML = `Sumaste ${totalPuntaje} puntos`;
 ganados.append (muestraPuntaje);
-//Juntar estos dos y hacer una funcion.
 }
 
 const inicioJuego = () => {
@@ -155,6 +156,18 @@ const terminar = () =>{
             }  }    
 }
 
+//Funcion que Imprime Carta
+const imprimeCarta = (card) => {
+    const contenedorCarta = document.createElement (`div`);
+    contenedorCarta.classList.add (`contenedorCarta`)
+    contenedorCarta.id = `contenedorCarta`;
+    contenedorCarta.innerHTML = `
+        <div id="carta">
+            <h3>${card}</h3>
+        </div>`;
+    return contenedorCarta
+}
+
 //Programa principal
 bienvenidaUsuario ();
 botonInicio.onclick = () => {
@@ -171,8 +184,9 @@ botonInicio.onclick = () => {
         while (terminaJugador || terminaMesa) {
             if (sumadorCartasCasino<=17) {
                 carta = Math.floor((Math.random()*10)+1);
+                cartasCasino.appendChild (imprimeCarta(carta));
                 sumadorCartasCasino = carta + sumadorCartasCasino
-                alert (`La casa sacó ${carta}`)
+                //alert (`La casa sacó ${carta}`)
                 arrayCartasCasino.push (carta);
             }
             else {
@@ -180,7 +194,7 @@ botonInicio.onclick = () => {
             }
             if (terminaJugador){
                 carta = Math.floor((Math.random()*10)+1);
-                alert (`Sacaste un ${carta}`);
+                cartasJugador.appendChild (imprimeCarta(carta));
                 arrayCartasJugador.push (carta);
                 contadorCartas ++;
                 sumadorCartasJugador = carta + sumadorCartasJugador;
@@ -194,7 +208,6 @@ botonInicio.onclick = () => {
     alert (`Ingresaste: ${contadorCartas} cartas.`);
 //se llama a la funcion para ver si es whiteJack
     alert (whiteJack(sumadorCartasJugador, sumadorCartasCasino));
-
 
 //Se crea un objeto con los datos de la jugada
 const jugada1 = new Jugada (usuario, contadorCartas, sumadorCartasJugador);
