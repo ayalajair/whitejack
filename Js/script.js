@@ -16,6 +16,8 @@ let carta;
 let arrayCartasJugador = [];
 let arrayCartasCasino = [];
 let usuario
+let terminaMesa;
+let terminaJugador
 
 //DOM
 const ingreso = document.querySelector (`#ingreso`);
@@ -26,6 +28,12 @@ const botonInicio = document.querySelector(`#botonInicio`);
 const botonReinicio = document.querySelector (`#botonReinicio`);
 const cartasCasino = document.querySelector (`#cartasCasino`);
 const cartasJugador = document.querySelector (`#cartasJugador`);
+const seguirJugando = document.querySelector (`#seguirJugando`);
+const botonSi = document.querySelector (`#botonSi`);
+const botonNo = document.querySelector (`#botonNo`);
+const resultadoFinal = document.querySelector (`#resultadoFinal`);
+const botonSeguir = document.querySelector (`#seguir`);
+const botonTerminar = document.querySelector (`#terminar`);
 //Array que contendrá el historial de jugadas
 const historialJugadas =[];
 //Clase de los objetos que se almacenarán en el Array
@@ -55,22 +63,29 @@ class Jugada {
 
 //Función para ver si el jugador se retira o no.
 const retira = (sumavos, sumamesa) => {
-    let marcha = true;
-    while (marcha) {
-        let sino = prompt (`Tenés ${sumavos} puntos, la casa tiene ${sumamesa}, querés sacar otra carta? (S/N)`)
-        switch (sino) {
-            case "s": 
-                
-                return true;
-            case "S":
-                return true;
-            case "n":
-                return false;
-            case "N":
-                return false;
-            default:
-                alert ("Ingrese una opción válida");
-            }}}
+        seguirJugando.innerHTML =  `<p>Tenés ${sumavos} puntos, la casa tiene ${sumamesa}, querés sacar otra carta? </p>`
+        botonSi.style.display = "inline";
+        botonNo.style.display = "inline";
+       // let retirar;
+    //    while (retirar) {
+            botonSi.onclick = () => {
+                botonSi.style.display = "none";
+                botonNo.style.display = "none";
+                juego();
+                };
+            botonNo.onclick = () => {
+                botonSi.style.display = "none";
+                botonNo.style.display = "none";
+                terminaJugador = false;
+                seguirJugando.innerHTML = `<p>Sumaste ${sumavos} puntos, la casa sumó ${sumamesa}</p>`
+                const resultado = whiteJack(sumavos, sumamesa);
+                resultadoFinal.innerHTML = `<h3>${resultado}</h3>`;
+                contadorCartas = 0;
+                sumadorCartasJugador = 0;
+                sumadorCartasCasino = 0;
+            };   
+      //  }
+};
 
 
 //Función para decir si se ganó o no (arreglar)
@@ -93,7 +108,6 @@ const whiteJack = (sumaJugador, sumaCasa)=> {
 
 
 //Función que realiza el informe final del total de las partidas
-
 const informeFinal = (informe)=> {
     //Se muestra el Array en la consola con el historial de los juegos que el jugador realizó consecutivamente
 //Se cuenta cuantas veces el jugador ganó y se informa
@@ -137,23 +151,12 @@ const bienvenidaUsuario = () => {
 
 //Función para determinar si se termina el juego o no. 
 const terminar = () =>{
-    let sigue = true;
-    while (sigue){
-        fin = prompt ("Quiere seguir jugando? (S/N)");
-        switch (fin) {
-            case "s":
-                botonInicio.style.display= "block";
-                return true;
-            case "S":
-                botonInicio.style.display= "block";
-                return true;
-            case "n":
-                return false;
-            case "N":
-                return false;
-            default:
-                alert ("Ingrese una opción válida");
-            }  }    
+        botonSeguir.onclick = () => {
+            bienvenidaUsuario();
+        }
+        botonTerminar.onclick = () => { 
+            informeFinal (historialJugadas);
+        }       
 }
 
 //Funcion que Imprime Carta
@@ -167,47 +170,43 @@ const imprimeCarta = (card) => {
         </div>`;
     return contenedorCarta
 }
+//Funcion del Juego 
+const juego = ()=> {
+    if (sumadorCartasCasino<=17 && terminaMesa) {
+        carta = Math.floor((Math.random()*10)+1);
+        cartasCasino.appendChild (imprimeCarta(carta));
+        sumadorCartasCasino = carta + sumadorCartasCasino
+        //alert (`La casa sacó ${carta}`)
+        arrayCartasCasino.push (carta);
+    }
+    else {
+        terminaMesa = false;
+    }
+    if (terminaJugador){
+        carta = Math.floor((Math.random()*10)+1);
+        cartasJugador.appendChild (imprimeCarta(carta));
+        arrayCartasJugador.push (carta);
+        contadorCartas ++;
+        sumadorCartasJugador = carta + sumadorCartasJugador;
+    }
+    if (sumadorCartasJugador >= 21 || !terminaJugador){
+        resultado = whiteJack(sumadorCartasJugador, sumadorCartasCasino);
+        resultadoFinal.innerHTML = `<h3>${resultado}</h3>`;
+        return;
+    }
+    if (terminaJugador)
+    retira(sumadorCartasJugador, sumadorCartasCasino);           
+} 
 
 //Programa principal
 bienvenidaUsuario ();
 botonInicio.onclick = () => {
     inicio.remove();
     botonInicio.style.display = "none";
-    let jugando = true;
-    while (jugando) {
-        //La partida sigue mientras el jugador no se retire
-        //se empiezan a generar cartas aleatorias entre 1 y 10
-        //Se invoca a la funcion sumar carta, y luego a la funcion retira para ver si el jugador se retira o no
-        //Cuando la suma de las cartas es igual a 21 o mas termina el juego automaticamente
-        let terminaJugador = true;
-        let terminaMesa = true;
-        while (terminaJugador || terminaMesa) {
-            if (sumadorCartasCasino<=17) {
-                carta = Math.floor((Math.random()*10)+1);
-                cartasCasino.appendChild (imprimeCarta(carta));
-                sumadorCartasCasino = carta + sumadorCartasCasino
-                //alert (`La casa sacó ${carta}`)
-                arrayCartasCasino.push (carta);
-            }
-            else {
-                terminaMesa = false;
-            }
-            if (terminaJugador){
-                carta = Math.floor((Math.random()*10)+1);
-                cartasJugador.appendChild (imprimeCarta(carta));
-                arrayCartasJugador.push (carta);
-                contadorCartas ++;
-                sumadorCartasJugador = carta + sumadorCartasJugador;
-            }
-            if (sumadorCartasJugador >= 21)
-                break;
-            if (terminaJugador)
-            terminaJugador = retira (sumadorCartasJugador, sumadorCartasCasino);
-        }
-    //se informa la cantidad de cartas ingresadas
-    alert (`Ingresaste: ${contadorCartas} cartas.`);
-//se llama a la funcion para ver si es whiteJack
-    alert (whiteJack(sumadorCartasJugador, sumadorCartasCasino));
+        terminaJugador = true;
+        terminaMesa = true;
+        juego ();
+    
 
 //Se crea un objeto con los datos de la jugada
 const jugada1 = new Jugada (usuario, contadorCartas, sumadorCartasJugador);
@@ -218,14 +217,11 @@ jugada1.resumen = jugada1.jugadas();
 historialJugadas.push (jugada1);
 //Se llama a la funcion terminar para ver si el juego continua
     jugando = terminar ();
-    contadorCartas = 0;
-    sumadorCartasJugador = 0;
-    sumadorCartasCasino = 0;
+    
     arrayCartasCasino = [];
     arrayCartasJugador = [];
-}
+//}
     //Se llama a un funcion para hacer el informe final del total de partidas
-    informeFinal (historialJugadas); 
 };
 
 
