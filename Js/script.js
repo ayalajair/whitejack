@@ -106,8 +106,6 @@ const terminar = () =>{
         botonSeguir.style.display="none";
         ingreso.style.display = "block";
         bienvenida.innerHTML =``;
-        cartasCasino.innerHTML = `<h2>Casino</h2>`;
-        cartasJugador.innerHTML= `<h2>Tus cartas</h2>`
         seguirJugando.innerHTML= ``;
         resultadoFinal.innerHTML= ``;
         bienvenidaUsuario();
@@ -124,9 +122,13 @@ const imprimeCarta = (card) => {
     contenedorCarta.classList.add (`contenedorCarta`)
     contenedorCarta.id = `contenedorCarta`;
     contenedorCarta.innerHTML = `
-        <div id="carta">
-            <h3>${card}</h3>
-        </div>`;
+    <div id="carta" class="marcoCarta">
+    <div class="fondoCarta">
+        <div class="fondoNumero">
+            <h3 class="numeroCarta">${carta}</h3>
+        </div>
+    </div>
+    </div>`
     return contenedorCarta
 }
 

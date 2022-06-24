@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@1,600;1,700&family=Open+Sans:ital,wght@0,400;0,600;1,300&display=swap" rel="stylesheet">
     <title>White Jack</title>
 </head>
 <body>
@@ -18,33 +22,36 @@
             <input type="submit" value="Ingresar">
         </fieldset>
     </form>
-        <h2 id="bienvenida"></h2>
+        <h2 id="bienvenida" class="bienvenida"></h2>
     <div id="inicio">
         <p id="mensajeInicio"></p>
         <button id="botonInicio" style="display: none;">Empezar</button>
     </div>
-    <div id="cartasCasino">
-        <h2>Casino</h2>
-        
-    </div>
-    <hr>
-    <div id="cartasJugador">
+    <section class="mesa">
+        <h2>Cartas del Casino</h2>
+        <div id="cartasCasino" class="mano">
+        </div>
         <h2>Tus cartas</h2>
-    </div>
-    <div id="seguirJugando">
+        <div id="cartasJugador" class="mano">
+        </div>
+    </section>
+    <section class="seccionInteraccion">
 
-    </div>
-    <div>
-        <button id="botonSi" style="display: none;">SI</button>
-        <button id="botonNo" style="display: none;">No</button>
-    </div>
-    <div id="resultadoFinal">
-
-    </div>
-    <div>
-        <button id="seguir" style="display: none;">Seguir</button>
-        <button id="terminar" style="display: none;">Terminar</button>
-    </div>
+        <div id="seguirJugando" class="textoAbandono">
+            
+        </div>
+        <div class="botonesAbandono">
+            <button id="botonSi" style="display: none;">SI</button>
+            <button id="botonNo" style="display: none;">No</button>
+        </div>
+        <div id="resultadoFinal" class="resultadoFinal">
+            
+        </div>
+        <div>
+            <button id="seguir" style="display: none;">Seguir</button>
+            <button id="terminar" style="display: none;">Terminar</button>
+        </div>
+    </section>
     <div>
         <h2 id="rondas"></h2>    
         <ol id="jugadas"></ol>
