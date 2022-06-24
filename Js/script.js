@@ -222,6 +222,9 @@ const juego = ()=> {
         resultado = whiteJack(sumadorCartasJugador, sumadorCartasCasino);
         resultadoFinal.innerHTML = `<h3>${resultado}</h3>`;
         cargaJugada(usuario, contadorCartas, sumadorCartasJugador);
+        contadorCartas = 0;
+        sumadorCartasJugador = 0;
+        sumadorCartasCasino = 0;
         terminar();
         return;
     }
