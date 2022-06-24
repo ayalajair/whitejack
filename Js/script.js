@@ -101,11 +101,20 @@ const terminar = () =>{
     botonSeguir.style.display= "inline";
     botonTerminar.style.display= "inline";
     botonSeguir.onclick = () => {
+        botonTerminar.style.display= "none";
+        botonSeguir.style.display="none";
+        ingreso.style.display = "block";
+        bienvenida.innerHTML =``;
+        cartasCasino.innerHTML = `<h2>Casino</h2>`;
+        cartasJugador.innerHTML= `<h2>Tus cartas</h2>`
+        seguirJugando.innerHTML= ``;
+        resultadoFinal.innerHTML= ``;
         bienvenidaUsuario();
     }
     botonTerminar.onclick = () => { 
         informeFinal (historialJugadas);
         botonTerminar.style.display= "none";
+        botonSeguir.style.display="none";
     }       
 }
 
@@ -172,7 +181,7 @@ const bienvenidaUsuario = () => {
         e.preventDefault ();
         usuario = nombre.value;
         bienvenida.innerHTML = `Bienvenid@ ${usuario}!`;
-        ingreso.remove();
+        ingreso.style.display = "none";
         inicioJuego ();
     }
 }
@@ -223,7 +232,7 @@ const juego = ()=> {
 //Programa principal
 bienvenidaUsuario ();
 botonInicio.onclick = () => {
-    inicio.remove();
+    inicio.innerHTML = "";
     botonInicio.style.display = "none";
         terminaJugador = true;
         terminaMesa = true;
