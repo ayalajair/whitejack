@@ -89,7 +89,7 @@ const retira = (sumavos, sumamesa) => {
 
 //Función para decir si se ganó o no (arreglar)
 const whiteJack = (sumaJugador, sumaCasa)=> { 
-    seguirJugando.innerHTML =  `<p>Sacaste ${sumaJugador} puntos, la casa tiene ${sumaCasa}</p>` 
+    seguirJugando.innerHTML =  `<p>Sacaste ${sumaJugador} puntos, la casa tiene ${sumaCasa} puntos</p>` 
     if (sumaJugador>21)
         return "¡Perdiste!"
     else if ((sumaJugador===21) && (sumaCasa !== 21) ) 
