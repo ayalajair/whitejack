@@ -77,7 +77,6 @@ const retira = (sumavos, sumamesa) => {
                 botonSi.style.display = "none";
                 botonNo.style.display = "none";
                 terminaJugador = false;
-                seguirJugando.innerHTML = `<p>Sumaste ${sumavos} puntos, la casa sumó ${sumamesa}</p>`
                 const resultado = whiteJack(sumavos, sumamesa);
                 resultadoFinal.innerHTML = `<h3>${resultado}</h3>`;
                 contadorCartas = 0;
@@ -89,7 +88,8 @@ const retira = (sumavos, sumamesa) => {
 
 
 //Función para decir si se ganó o no (arreglar)
-const whiteJack = (sumaJugador, sumaCasa)=> {  
+const whiteJack = (sumaJugador, sumaCasa)=> { 
+    seguirJugando.innerHTML =  `<p>Sacaste ${sumaJugador} puntos, la casa tiene ${sumaCasa}</p>` 
     if (sumaJugador>21)
         return "¡Perdiste!"
     else if ((sumaJugador===21) && (sumaCasa !== 21) ) 
