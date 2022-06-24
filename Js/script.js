@@ -61,49 +61,14 @@ class Jugada {
     }
 };
 
-//Función para ver si el jugador se retira o no.
-const retira = (sumavos, sumamesa) => {
-        seguirJugando.innerHTML =  `<p>Tenés ${sumavos} puntos, la casa tiene ${sumamesa}, querés sacar otra carta? </p>`
-        botonSi.style.display = "inline";
-        botonNo.style.display = "inline";
-       // let retirar;
-    //    while (retirar) {
-            botonSi.onclick = () => {
-                botonSi.style.display = "none";
-                botonNo.style.display = "none";
-                juego();
-                };
-            botonNo.onclick = () => {
-                botonSi.style.display = "none";
-                botonNo.style.display = "none";
-                terminaJugador = false;
-                const resultado = whiteJack(sumavos, sumamesa);
-                resultadoFinal.innerHTML = `<h3>${resultado}</h3>`;
-                contadorCartas = 0;
-                sumadorCartasJugador = 0;
-                sumadorCartasCasino = 0;
-            };   
-      //  }
-};
-
-
-//Función para decir si se ganó o no (arreglar)
-const whiteJack = (sumaJugador, sumaCasa)=> { 
-    seguirJugando.innerHTML =  `<p>Sacaste ${sumaJugador} puntos, la casa tiene ${sumaCasa} puntos</p>` 
-    if (sumaJugador>21)
-        return "¡Perdiste!"
-    else if ((sumaJugador===21) && (sumaCasa !== 21) ) 
-        return "¡Ganaste! ¡White Jack!";
-    else if ((sumaJugador===21) && (sumaCasa === 21)) 
-        return "¡Empate!";
-    else if ((sumaJugador !== 21) && (sumaCasa === 21))
-        return "¡Perdiste!";
-    else if ((sumaJugador<21) && (sumaCasa > 21)) 
-        return "¡Ganaste!";
-    else if (sumaJugador>sumaCasa)
-        return "¡Ganaste!";
-    else 
-        return "¡Perdiste!";
+const cargaJugada = (u, contCard, sumCard) => {
+    //Se crea un objeto con los datos de la jugada
+const jugada1 = new Jugada (u, contCard, sumCard);
+//Se llama al método para guardar si se ganó o no
+jugada1.esWhiteJack();
+jugada1.resumen = jugada1.jugadas();
+//Se guarda el objeto en el array
+historialJugadas.push (jugada1);
 };
 
 
@@ -131,6 +96,69 @@ const muestraPuntaje = document.createElement (`h3`);
 muestraPuntaje.innerHTML = `Sumaste ${totalPuntaje} puntos`;
 ganados.append (muestraPuntaje);
 }
+//Función para determinar si se termina el juego o no. 
+const terminar = () =>{
+    botonSeguir.style.display= "inline";
+    botonTerminar.style.display= "inline";
+    botonSeguir.onclick = () => {
+        bienvenidaUsuario();
+    }
+    botonTerminar.onclick = () => { 
+        informeFinal (historialJugadas);
+        botonTerminar.style.display= "none";
+    }       
+}
+
+//Función para ver si el jugador se retira o no.
+const retira = (sumavos, sumamesa) => {
+        seguirJugando.innerHTML =  `<p>Tenés ${sumavos} puntos, la casa tiene ${sumamesa}, querés sacar otra carta? </p>`
+        botonSi.style.display = "inline";
+        botonNo.style.display = "inline";
+       // let retirar;
+    //    while (retirar) {
+            botonSi.onclick = () => {
+                botonSi.style.display = "none";
+                botonNo.style.display = "none";
+                juego();
+                };
+            botonNo.onclick = () => {
+                botonSi.style.display = "none";
+                botonNo.style.display = "none";
+                terminaJugador = false;
+                const resultado = whiteJack(sumavos, sumamesa);
+                resultadoFinal.innerHTML = `<h3>${resultado}</h3>`;
+                cargaJugada(usuario, contadorCartas, sumadorCartasJugador)
+                contadorCartas = 0;
+                sumadorCartasJugador = 0;
+                sumadorCartasCasino = 0;
+                terminar();
+            };   
+      //  }
+};
+
+
+//Función para decir si se ganó o no (arreglar)
+const whiteJack = (sumaJugador, sumaCasa)=> { 
+    seguirJugando.innerHTML =  `<p>Sacaste ${sumaJugador} puntos, la casa tiene ${sumaCasa} puntos</p>` 
+    if (sumaJugador>21)
+        return "¡Perdiste!"
+    else if ((sumaJugador===21) && (sumaCasa !== 21) ) 
+        return "¡Ganaste! ¡White Jack!";
+    else if ((sumaJugador===21) && (sumaCasa === 21)) 
+        return "¡Empate!";
+    else if ((sumaJugador !== 21) && (sumaCasa === 21))
+        return "¡Perdiste!";
+    else if ((sumaJugador<21) && (sumaCasa > 21)) 
+        return "¡Ganaste!";
+    else if (sumaJugador>sumaCasa)
+        return "¡Ganaste!";
+    else 
+        return "¡Perdiste!";
+};
+
+
+
+
 
 const inicioJuego = () => {
     inicio.innerHTML = `Para empezar el Juego, hace click en el botón <b>Empezar</b>`;
@@ -149,15 +177,7 @@ const bienvenidaUsuario = () => {
     }
 }
 
-//Función para determinar si se termina el juego o no. 
-const terminar = () =>{
-        botonSeguir.onclick = () => {
-            bienvenidaUsuario();
-        }
-        botonTerminar.onclick = () => { 
-            informeFinal (historialJugadas);
-        }       
-}
+
 
 //Funcion que Imprime Carta
 const imprimeCarta = (card) => {
@@ -189,9 +209,11 @@ const juego = ()=> {
         contadorCartas ++;
         sumadorCartasJugador = carta + sumadorCartasJugador;
     }
-    if (sumadorCartasJugador >= 21 || !terminaJugador){
+    if (sumadorCartasJugador >= 21 || (!terminaJugador && !terminaMesa)){
         resultado = whiteJack(sumadorCartasJugador, sumadorCartasCasino);
         resultadoFinal.innerHTML = `<h3>${resultado}</h3>`;
+        cargaJugada(usuario, contadorCartas, sumadorCartasJugador);
+        terminar();
         return;
     }
     if (terminaJugador)
@@ -205,19 +227,7 @@ botonInicio.onclick = () => {
     botonInicio.style.display = "none";
         terminaJugador = true;
         terminaMesa = true;
-        juego ();
-    
-
-//Se crea un objeto con los datos de la jugada
-const jugada1 = new Jugada (usuario, contadorCartas, sumadorCartasJugador);
-//Se llama al método para guardar si se ganó o no
-jugada1.esWhiteJack();
-jugada1.resumen = jugada1.jugadas();
-//Se guarda el objeto en el array
-historialJugadas.push (jugada1);
-//Se llama a la funcion terminar para ver si el juego continua
-    jugando = terminar ();
-    
+        juego ();    
     arrayCartasCasino = [];
     arrayCartasJugador = [];
 //}
