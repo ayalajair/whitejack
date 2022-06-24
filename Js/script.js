@@ -53,7 +53,7 @@ class Jugada {
         this.resultado = "¡Ganó!";
         }
         else if (this.puntaje >= 21){
-            this.resultado = "Perdió";
+            this.resultado = "No hizo WhiteJack";
         };
     };
     jugadas () {
@@ -117,6 +117,17 @@ const terminar = () =>{
         botonSeguir.style.display="none";
     }       
 }
+//Funcion que Imprime Carta
+const imprimeCarta = (card) => {
+    const contenedorCarta = document.createElement (`div`);
+    contenedorCarta.classList.add (`contenedorCarta`)
+    contenedorCarta.id = `contenedorCarta`;
+    contenedorCarta.innerHTML = `
+        <div id="carta">
+            <h3>${card}</h3>
+        </div>`;
+    return contenedorCarta
+}
 
 //Función para ver si el jugador se retira o no.
 const retira = (sumavos, sumamesa) => {
@@ -133,7 +144,13 @@ const retira = (sumavos, sumamesa) => {
             botonNo.onclick = () => {
                 botonSi.style.display = "none";
                 botonNo.style.display = "none";
-                terminaJugador = false;
+                while (sumamesa < 17){
+                    carta = Math.floor((Math.random()*10)+1);
+                    cartasCasino.appendChild (imprimeCarta(carta));
+                    sumamesa = carta + sumamesa
+                    arrayCartasCasino.push (carta);                    
+                }
+                seguirJugando.innerHTML =  `<p>Tenés ${sumavos} puntos, la casa sacó ${sumamesa}</p>`
                 const resultado = whiteJack(sumavos, sumamesa);
                 resultadoFinal.innerHTML = `<h3>${resultado}</h3>`;
                 cargaJugada(usuario, contadorCartas, sumadorCartasJugador)
@@ -146,7 +163,7 @@ const retira = (sumavos, sumamesa) => {
 };
 
 
-//Función para decir si se ganó o no (arreglar)
+//Función para decir si se ganó o no
 const whiteJack = (sumaJugador, sumaCasa)=> { 
     seguirJugando.innerHTML =  `<p>Sacaste ${sumaJugador} puntos, la casa tiene ${sumaCasa} puntos</p>` 
     if (sumaJugador>21)
@@ -168,7 +185,7 @@ const whiteJack = (sumaJugador, sumaCasa)=> {
 
 
 
-
+//Funcion que genera el boton de inicio del juego
 const inicioJuego = () => {
     inicio.innerHTML = `Para empezar el Juego, hace click en el botón <b>Empezar</b>`;
     botonInicio.style.display = "block";
@@ -188,28 +205,14 @@ const bienvenidaUsuario = () => {
 
 
 
-//Funcion que Imprime Carta
-const imprimeCarta = (card) => {
-    const contenedorCarta = document.createElement (`div`);
-    contenedorCarta.classList.add (`contenedorCarta`)
-    contenedorCarta.id = `contenedorCarta`;
-    contenedorCarta.innerHTML = `
-        <div id="carta">
-            <h3>${card}</h3>
-        </div>`;
-    return contenedorCarta
-}
+
 //Funcion del Juego 
 const juego = ()=> {
-    if (sumadorCartasCasino<=17 && terminaMesa) {
+    if (sumadorCartasCasino<=17) {
         carta = Math.floor((Math.random()*10)+1);
         cartasCasino.appendChild (imprimeCarta(carta));
         sumadorCartasCasino = carta + sumadorCartasCasino
-        //alert (`La casa sacó ${carta}`)
         arrayCartasCasino.push (carta);
-    }
-    else {
-        terminaMesa = false;
     }
     if (terminaJugador){
         carta = Math.floor((Math.random()*10)+1);
@@ -218,7 +221,7 @@ const juego = ()=> {
         contadorCartas ++;
         sumadorCartasJugador = carta + sumadorCartasJugador;
     }
-    if (sumadorCartasJugador >= 21 || (!terminaJugador && !terminaMesa)){
+    if (sumadorCartasJugador >= 21 ){
         resultado = whiteJack(sumadorCartasJugador, sumadorCartasCasino);
         resultadoFinal.innerHTML = `<h3>${resultado}</h3>`;
         cargaJugada(usuario, contadorCartas, sumadorCartasJugador);
@@ -228,7 +231,6 @@ const juego = ()=> {
         terminar();
         return;
     }
-    if (terminaJugador)
     retira(sumadorCartasJugador, sumadorCartasCasino);           
 } 
 
@@ -242,8 +244,7 @@ botonInicio.onclick = () => {
         juego ();    
     arrayCartasCasino = [];
     arrayCartasJugador = [];
-//}
-    //Se llama a un funcion para hacer el informe final del total de partidas
+
 };
 
 
