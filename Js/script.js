@@ -18,6 +18,7 @@ let arrayCartasCasino = [];
 let usuario
 let terminaMesa;
 let terminaJugador
+let primeraVez = true ;
 
 //DOM
 const ingreso = document.querySelector (`#ingreso`);
@@ -208,6 +209,18 @@ const bienvenidaUsuario = () => {
 
 //Funcion del Juego 
 const juego = ()=> {
+    if (primeraVez){
+        carta = Math.floor((Math.random()*10)+1);
+        cartasCasino.appendChild (imprimeCarta(carta));
+        sumadorCartasCasino = carta + sumadorCartasCasino
+        arrayCartasCasino.push (carta);
+        carta = Math.floor((Math.random()*10)+1);
+        cartasJugador.appendChild (imprimeCarta(carta));
+        arrayCartasJugador.push (carta);
+        contadorCartas ++;
+        sumadorCartasJugador = carta + sumadorCartasJugador;
+        primeraVez = false;
+    }
     if (sumadorCartasCasino<=17) {
         carta = Math.floor((Math.random()*10)+1);
         cartasCasino.appendChild (imprimeCarta(carta));
@@ -228,6 +241,7 @@ const juego = ()=> {
         contadorCartas = 0;
         sumadorCartasJugador = 0;
         sumadorCartasCasino = 0;
+        primeraVez = true;
         terminar();
         return;
     }
