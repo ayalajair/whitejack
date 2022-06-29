@@ -15,7 +15,7 @@ let contadorCartas= 0;
 let carta;
 let arrayCartasJugador = [];
 let arrayCartasCasino = [];
-let usuario
+let usuario = JSON.parse(localStorage.getItem(`usuario`))
 let terminaMesa;
 let terminaJugador
 let primeraVez = true ;
@@ -35,8 +35,8 @@ const botonNo = document.querySelector (`#botonNo`);
 const resultadoFinal = document.querySelector (`#resultadoFinal`);
 const botonSeguir = document.querySelector (`#seguir`);
 const botonTerminar = document.querySelector (`#terminar`);
-//Array que contendrá el historial de jugadas
-const historialJugadas =[];
+//Array que contendrá el historial de jugadas, primero se consulta en el LocalStorage si habia algo guardado anteriormente.
+const historialJugadas =JSON.parse(localStorage.getItem(`historialJugadas`)) ||[];
 //Clase de los objetos que se almacenarán en el Array
 class Jugada {
     constructor (usuario,cantCartas,puntaje){
@@ -70,7 +70,14 @@ jugada1.esWhiteJack();
 jugada1.resumen = jugada1.jugadas();
 //Se guarda el objeto en el array
 historialJugadas.push (jugada1);
+//Se guarda el historial el el LocalStorage
+localStorage.setItem('historialJugadas', JSON.stringify(historialJugadas));
 };
+
+const borrarCartas = () => {
+    cartasJugador.innerHTML = ``;
+    cartasCasino.innerHTML= ``;
+}
 
 
 //Función que realiza el informe final del total de las partidas
@@ -82,7 +89,7 @@ tituloHistorial.innerHTML = (`Historial de Jugadas: `);
 const jugadas = document.querySelector (`#jugadas`);
 for (element of informe) {
     let jugada = document.createElement (`li`);
-    jugada.innerHTML = `En esta jugada ${element.jugadas()}`
+    jugada.innerHTML = `En esta jugada ${element.resumen}`
     jugadas.append(jugada);
 }
 //Se filtran las partidas ganadas, se guardan en un array y se contabilizan
@@ -102,6 +109,7 @@ const terminar = () =>{
     botonSeguir.style.display= "inline";
     botonTerminar.style.display= "inline";
     botonSeguir.onclick = () => {
+        borrarCartas();
         botonTerminar.style.display= "none";
         botonSeguir.style.display="none";
         ingreso.style.display = "block";
@@ -142,6 +150,7 @@ const retira = (sumavos, sumamesa) => {
             botonSi.onclick = () => {
                 botonSi.style.display = "none";
                 botonNo.style.display = "none";
+                borrarCartas();
                 juego();
                 };
             botonNo.onclick = () => {
@@ -157,6 +166,7 @@ const retira = (sumavos, sumamesa) => {
                 const resultado = whiteJack(sumavos, sumamesa);
                 resultadoFinal.innerHTML = `<h3>${resultado}</h3>`;
                 cargaJugada(usuario, contadorCartas, sumadorCartasJugador)
+                
                 contadorCartas = 0;
                 sumadorCartasJugador = 0;
                 sumadorCartasCasino = 0;
@@ -196,13 +206,20 @@ const inicioJuego = () => {
 
 //Funcion que inicializa el juego
 const bienvenidaUsuario = () => {
-
-    ingreso.onsubmit = (e) => {
-        e.preventDefault ();
-        usuario = nombre.value;
+    if (!!usuario){
         bienvenida.innerHTML = `Bienvenid@ ${usuario}!`;
-        ingreso.style.display = "none";
+        ingreso.style.display = "none";  
         inicioJuego ();
+    }
+    else {
+        ingreso.onsubmit = (e) => {
+            e.preventDefault ();
+            usuario = nombre.value;
+            localStorage.setItem('usuario', JSON.stringify(usuario));
+            bienvenida.innerHTML = `Bienvenid@ ${usuario}!`;
+            ingreso.style.display = "none";
+            inicioJuego ();
+        }
     }
 }
 
