@@ -122,11 +122,14 @@ const terminar = () =>{
         Swal.fire({
             title: 'Estás seguro que querés terminar el juego?',
             icon: 'warning',
+            background: '#335918',
+            color: '#fff', 
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Sí, quiero terminar!',
             cancelButtonText: 'No, quiero seguir jugando!'
+            
         }).then((result) => {
             if (result.isConfirmed) {
                 Swal.fire(
