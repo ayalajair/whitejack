@@ -4,7 +4,7 @@ html, body {
 }
 
 body {
-  background-color: #35D462;
+  background-color: #335918;
   height: 100vh;
 }
 
@@ -90,6 +90,7 @@ li {
   margin: 20px;
   background-color: #fff;
   border: #000;
+  box-shadow: 10px 5px 5px black;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -130,6 +131,10 @@ li {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.swal2-popup {
+  background-color: #335918;
 }
 
 
