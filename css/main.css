@@ -23,6 +23,7 @@ h2 {
 }
 
 h3 {
+  text-align: center;
   font-family: "cabin", sans-serif;
   color: #fff;
   text-shadow: 2px 2px 3px #000,2px 2px 3px #000;
@@ -39,6 +40,19 @@ p {
   display: block;
 }
 #rondas {
+  text-align: center;
+}
+#jugadas {
+  margin: auto;
+  width: 70% ;
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+  color: #fff;
+  text-shadow: 2px 2px 3px #000,2px 2px 3px #000;
+  font-size: 1em; 
+  display: block;
+}
+li {
   text-align: center;
 }
 #titulo , #ingreso {
