@@ -22,8 +22,33 @@ h2 {
   display: block;
 }
 
+h3 {
+  font-family: "cabin", sans-serif;
+  color: #fff;
+  text-shadow: 2px 2px 3px #000,2px 2px 3px #000;
+  font-size: 2em; 
+  display: block;
+}
+
+p {
+  font-family: 'Open Sans', sans-serif;
+  text-align: center;
+  color: #fff;
+  text-shadow: 2px 2px 3px #000,2px 2px 3px #000;
+  font-size: 1em; 
+  display: block;
+}
+#rondas {
+  text-align: center;
+}
 #titulo , #ingreso {
   display: flex;
+  justify-content: center;
+}
+
+#inicio {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
 }
 .bienvenida {
@@ -38,7 +63,7 @@ h2 {
 }
 
 .mano {
-  width: 50%;
+  width: 90%;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -46,8 +71,8 @@ h2 {
 }
 
 .marcoCarta {
-  width: 125px;
-  height: 200px;
+  width: 95px;
+  height: 150px;
   margin: 20px;
   background-color: #fff;
   border: #000;
@@ -58,8 +83,8 @@ h2 {
 }
 
 .fondoCarta {
-  width: 105px;
-  height: 180px;
+  width: 80px;
+  height: 130px;
   background-color: #000;
   display: flex;
   align-items: center;
@@ -67,8 +92,8 @@ h2 {
 }
 
 .fondoNumero {
-  width: 105px;
-  height: 180px;
+  width: 80px;
+  height: 120px;
   border-radius: 50px;
   background-color: #fff;
   display: flex;
@@ -81,7 +106,7 @@ h2 {
   color: #1339D4;
   text-shadow: 2px 2px 3px #000,2px 2px 3px #000, 2px 2px 3px #000;
   font-family: "cabin", sans-serif;
-  font-size: 100px;
+  font-size: 75px;
   letter-spacing: -5px;
   
 }

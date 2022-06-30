@@ -118,10 +118,28 @@ const terminar = () =>{
         resultadoFinal.innerHTML= ``;
         bienvenidaUsuario();
     }
-    botonTerminar.onclick = () => { 
-        informeFinal (historialJugadas);
-        botonTerminar.style.display= "none";
-        botonSeguir.style.display="none";
+    botonTerminar.onclick = () => {
+        Swal.fire({
+            title: 'Estás seguro que querés terminar el juego?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, quiero terminar!',
+            cancelButtonText: 'No, quiero seguir jugando!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Adiós',
+                    'Nos vemos la próxima.',
+                    'success'                
+                )
+                informeFinal (historialJugadas);
+                botonTerminar.style.display= "none";
+                botonSeguir.style.display="none";
+            }
+        }) 
+        
     }       
 }
 //Funcion que Imprime Carta
@@ -150,7 +168,6 @@ const retira = (sumavos, sumamesa) => {
             botonSi.onclick = () => {
                 botonSi.style.display = "none";
                 botonNo.style.display = "none";
-                borrarCartas();
                 juego();
                 };
             botonNo.onclick = () => {
