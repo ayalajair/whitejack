@@ -132,10 +132,13 @@ const terminar = () =>{
             
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire(
-                    'Adiós',
-                    'Nos vemos la próxima.',
-                    'success'                
+                Swal.fire({
+                    title: 'Adiós',
+                    text: 'Nos vemos la próxima.',
+                    icon: 'success', 
+                    background: '#335918',
+                    color: '#fff',
+                    }
                 )
                 informeFinal (historialJugadas);
                 botonTerminar.style.display= "none";
