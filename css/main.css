@@ -6,6 +6,9 @@ html, body {
 body {
   background-color: #335918;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
 }
 
 h1 {
@@ -61,10 +64,15 @@ li {
   justify-content: center;
 }
 #botones {
-  display: flex;
+  width: fit-content;
+  display: none;
+  align-self: center;
+  justify-self: center;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border-radius: 20px;
+  border: #335918;
 }
 
 #inicio {
@@ -73,6 +81,7 @@ li {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border: none;
 }
 .bienvenida {
   text-align: center;

@@ -39,6 +39,7 @@ const botonRanking = document.querySelector (`#botonRanking`);
 const mesa = document.querySelector (`#mesa`);
 const tituloHistorial = document.querySelector (`#rondas`);
 const volverHistorial = document.querySelector (`#volverHistorial`);
+const botones = document.querySelector (`#botones`);
 const jugadas = document.querySelector (`#jugadas`);
 const ganados = document.querySelector (`#ganados`);
 
@@ -69,6 +70,36 @@ class Jugada {
     }
 };
 
+
+//**********************Funcion Inicio juego*************************************************** */
+
+//Funcion que genera el boton de inicio del juego
+const inicioJuego = () => {
+    botones.style.display = "flex";
+    botones.style.border = "10px solid #E6BF25";
+    botonInicio.style.display = "block";
+    botonRanking.style.display = "block";
+}
+
+//Funcion que inicializa el juego
+const bienvenidaUsuario = () => {
+    if (!!usuario){
+        bienvenida.innerHTML = `Bienvenid@ ${usuario}!`;
+        ingreso.style.display = "none";  
+        inicioJuego ();
+    }
+    else {
+        ingreso.onsubmit = (e) => {
+            e.preventDefault ();
+            usuario = nombre.value;
+            localStorage.setItem('usuario', JSON.stringify(usuario));
+            bienvenida.innerHTML = `Bienvenid@ ${usuario}!`;
+            ingreso.style.display = "none";
+            inicioJuego ();
+        }
+    }
+}
+
 //***********************************Funcion cargaJugada***************************************************************************** */
 
 const cargaJugada = (u, contCard, sumCard) => {
@@ -89,8 +120,7 @@ const borrarCartas = () => {
 }
 //********************************************Funcion Borrar Historial********************************************************** */
 const borrarHistorial = () => {
-    botonInicio.style.display= "block";
-    botonRanking.style.display= "block";
+    inicioJuego ();
     tituloHistorial.innerHTML= (``);
     jugadas.innerHTML=(``);
     ganados.innerHTML=(``)
@@ -101,6 +131,7 @@ const borrarHistorial = () => {
 //Función que realiza el informe final del total de las partidas
 const informeFinal = (informe)=> {
 //Se cuenta cuantas veces el jugador ganó y se informa
+botones.style.border = "none";
 botonInicio.style.display= "none";
 botonRanking.style.display= "none";
 tituloHistorial.innerHTML = (`Historial de Jugadas: `);
@@ -233,37 +264,6 @@ const whiteJack = (sumaJugador, sumaCasa)=> {
         return "¡Perdiste!";
 };
 
-
-
-
-//Funcion que genera el boton de inicio del juego
-const inicioJuego = () => {
-    botonInicio.style.display = "block";
-    botonRanking.style.display = "block";
-}
-
-//Funcion que inicializa el juego
-const bienvenidaUsuario = () => {
-    if (!!usuario){
-        bienvenida.innerHTML = `Bienvenid@ ${usuario}!`;
-        ingreso.style.display = "none";  
-        inicioJuego ();
-    }
-    else {
-        ingreso.onsubmit = (e) => {
-            e.preventDefault ();
-            usuario = nombre.value;
-            localStorage.setItem('usuario', JSON.stringify(usuario));
-            bienvenida.innerHTML = `Bienvenid@ ${usuario}!`;
-            ingreso.style.display = "none";
-            inicioJuego ();
-        }
-    }
-}
-
-
-
-
 //Funcion del Juego 
 const juego = ()=> {
     mesa.style.display = "flex";
@@ -309,6 +309,7 @@ const juego = ()=> {
 //Programa principal
 bienvenidaUsuario ();
 botonInicio.onclick = () => {
+    botones.style.border = "none";
     botonInicio.style.display = "none";
     botonRanking.style.display= "none";
         terminaJugador = true;
