@@ -60,18 +60,26 @@ li {
   display: flex;
   justify-content: center;
 }
-
-#inicio {
+#botones {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+}
+
+#inicio {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .bienvenida {
   text-align: center;
 }
 
-.mesa {
-  display: flex;
+#mesa {
+  display: none;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -84,6 +92,7 @@ button {
   width: fit-content;
   background-color: #000;
   color: #fff;
+  border: 2px solid #fff;
   border-radius: 5px;
 }
 
@@ -152,6 +161,11 @@ button {
 .swal2-popup {
   background-color: #335918;
 }
+
+#volverHistorial {
+  display: none;
+}
+
 
 
 

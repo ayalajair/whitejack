@@ -24,7 +24,6 @@ let primeraVez = true ;
 const ingreso = document.querySelector (`#ingreso`);
 const nombre = document.querySelector (`#nombre`);
 const bienvenida = document.querySelector (`#bienvenida`);
-const inicio = document.querySelector (`#mensajeInicio`);
 const botonInicio = document.querySelector(`#botonInicio`);
 const botonReinicio = document.querySelector (`#botonReinicio`);
 const cartasCasino = document.querySelector (`#cartasCasino`);
@@ -35,6 +34,14 @@ const botonNo = document.querySelector (`#botonNo`);
 const resultadoFinal = document.querySelector (`#resultadoFinal`);
 const botonSeguir = document.querySelector (`#seguir`);
 const botonTerminar = document.querySelector (`#terminar`);
+const verRanking = document.querySelector (`#verRanking`);
+const botonRanking = document.querySelector (`#botonRanking`);
+const mesa = document.querySelector (`#mesa`);
+const tituloHistorial = document.querySelector (`#rondas`);
+const volverHistorial = document.querySelector (`#volverHistorial`);
+const jugadas = document.querySelector (`#jugadas`);
+const ganados = document.querySelector (`#ganados`);
+
 //Array que contendrá el historial de jugadas, primero se consulta en el LocalStorage si habia algo guardado anteriormente.
 const historialJugadas =JSON.parse(localStorage.getItem(`historialJugadas`)) ||[];
 //Clase de los objetos que se almacenarán en el Array
@@ -62,6 +69,8 @@ class Jugada {
     }
 };
 
+//***********************************Funcion cargaJugada***************************************************************************** */
+
 const cargaJugada = (u, contCard, sumCard) => {
     //Se crea un objeto con los datos de la jugada
 const jugada1 = new Jugada (u, contCard, sumCard);
@@ -78,15 +87,25 @@ const borrarCartas = () => {
     cartasJugador.innerHTML = ``;
     cartasCasino.innerHTML= ``;
 }
+//********************************************Funcion Borrar Historial********************************************************** */
+const borrarHistorial = () => {
+    botonInicio.style.display= "block";
+    botonRanking.style.display= "block";
+    tituloHistorial.innerHTML= (``);
+    jugadas.innerHTML=(``);
+    ganados.innerHTML=(``)
+    volverHistorial.style.display = "none";
+}
 
-
+//************************************************Funcion informeFinal***********************************************************
 //Función que realiza el informe final del total de las partidas
 const informeFinal = (informe)=> {
-    //Se muestra el Array en la consola con el historial de los juegos que el jugador realizó consecutivamente
 //Se cuenta cuantas veces el jugador ganó y se informa
-const tituloHistorial = document.querySelector (`#rondas`);
+botonInicio.style.display= "none";
+botonRanking.style.display= "none";
 tituloHistorial.innerHTML = (`Historial de Jugadas: `);
-const jugadas = document.querySelector (`#jugadas`);
+volverHistorial.style.display = "block";
+volverHistorial.onclick = ()=> borrarHistorial ();
 for (element of informe) {
     let jugada = document.createElement (`li`);
     jugada.innerHTML = `En esta jugada ${element.resumen}`
@@ -104,23 +123,14 @@ const muestraPuntaje = document.createElement (`h3`);
 muestraPuntaje.innerHTML = `Sumaste ${totalPuntaje} puntos`;
 ganados.append (muestraPuntaje);
 }
+
+//**********************************Función terminar*************************************************************************** */
 //Función para determinar si se termina el juego o no. 
 const terminar = () =>{
-    botonSeguir.style.display= "inline";
     botonTerminar.style.display= "inline";
-    botonSeguir.onclick = () => {
-        borrarCartas();
-        botonTerminar.style.display= "none";
-        botonSeguir.style.display="none";
-        ingreso.style.display = "block";
-        bienvenida.innerHTML =``;
-        seguirJugando.innerHTML= ``;
-        resultadoFinal.innerHTML= ``;
-        bienvenidaUsuario();
-    }
     botonTerminar.onclick = () => {
         Swal.fire({
-            title: 'Estás seguro que querés terminar el juego?',
+            title: 'Estás seguro que querés salir del juego?',
             icon: 'warning',
             background: '#335918',
             color: '#fff', 
@@ -128,7 +138,7 @@ const terminar = () =>{
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Sí, quiero terminar!',
-            cancelButtonText: 'No, quiero seguir jugando!'
+            cancelButtonText: 'No, quiero quedarme!'
             
         }).then((result) => {
             if (result.isConfirmed) {
@@ -140,15 +150,20 @@ const terminar = () =>{
                     color: '#fff',
                     }
                 )
-                informeFinal (historialJugadas);
+                borrarCartas();
+                ingreso.style.display = "block";
+                bienvenida.innerHTML =``;
+                seguirJugando.innerHTML= ``;
+                resultadoFinal.innerHTML= ``;
                 botonTerminar.style.display= "none";
-                botonSeguir.style.display="none";
+                mesa.style.display= "none";
+                bienvenidaUsuario();
             }
         }) 
         
     }       
 }
-//Funcion que Imprime Carta
+//***************************************Funcion que Imprime Carta*******************************************************************
 const imprimeCarta = (card) => {
     const contenedorCarta = document.createElement (`div`);
     contenedorCarta.classList.add (`contenedorCarta`)
@@ -163,7 +178,7 @@ const imprimeCarta = (card) => {
     </div>`
     return contenedorCarta
 }
-
+//***********************************Función Retira************************************************************************ */
 //Función para ver si el jugador se retira o no.
 const retira = (sumavos, sumamesa) => {
         seguirJugando.innerHTML =  `<p>Tenés ${sumavos} puntos, la casa tiene ${sumamesa}, querés sacar otra carta? </p>`
@@ -223,8 +238,8 @@ const whiteJack = (sumaJugador, sumaCasa)=> {
 
 //Funcion que genera el boton de inicio del juego
 const inicioJuego = () => {
-    inicio.innerHTML = `Para empezar el Juego, hace click en el botón <b>Empezar</b>`;
     botonInicio.style.display = "block";
+    botonRanking.style.display = "block";
 }
 
 //Funcion que inicializa el juego
@@ -251,6 +266,7 @@ const bienvenidaUsuario = () => {
 
 //Funcion del Juego 
 const juego = ()=> {
+    mesa.style.display = "flex";
     if (primeraVez){
         carta = Math.floor((Math.random()*10)+1);
         cartasCasino.appendChild (imprimeCarta(carta));
@@ -293,8 +309,8 @@ const juego = ()=> {
 //Programa principal
 bienvenidaUsuario ();
 botonInicio.onclick = () => {
-    inicio.innerHTML = "";
     botonInicio.style.display = "none";
+    botonRanking.style.display= "none";
         terminaJugador = true;
         terminaMesa = true;
         juego ();    
@@ -302,6 +318,9 @@ botonInicio.onclick = () => {
     arrayCartasJugador = [];
 
 };
+botonRanking.onclick = () => {
+    informeFinal (historialJugadas);
+}
 
 
 
