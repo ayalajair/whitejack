@@ -162,12 +162,16 @@ const terminar = () =>{
     botonTerminar.onclick = () => {
         Swal.fire({
             title: 'Estás seguro que querés salir del juego?',
+            showClass: { 
+                popup: 'animate__animated animate__fadeInDown'},
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'},
             icon: 'warning',
             background: '#335918',
             color: '#fff', 
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            confirmButtonColor: '#000',
+            cancelButtonColor: '#3085d6',
             confirmButtonText: 'Sí, quiero terminar!',
             cancelButtonText: 'No, quiero quedarme!'
             
@@ -179,6 +183,7 @@ const terminar = () =>{
                     icon: 'success', 
                     background: '#335918',
                     color: '#fff',
+                    confirmButtonColor: '#000',
                     }
                 )
                 borrarCartas();
