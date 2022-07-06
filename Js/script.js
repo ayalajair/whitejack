@@ -8,7 +8,7 @@
 //Terminado el juego te pregunta si queres jugar otra vez
 //Si aceptas arranca nuevamente el juego, Si no aceptas te muestra una lista de las jugadas realizadas
 
-//Variables
+//**************************************Variables**********************************************************************************
 let sumadorCartasJugador = 0;
 let sumadorCartasCasino = 0;
 let contadorCartas= 0;
@@ -20,11 +20,12 @@ let terminaMesa;
 let terminaJugador
 let primeraVez = true ;
 
-//DOM
+//**************************************DOM*****************************************************************************************
 const ingreso = document.querySelector (`#ingreso`);
 const nombre = document.querySelector (`#nombre`);
 const bienvenida = document.querySelector (`#bienvenida`);
 const botonInicio = document.querySelector(`#botonInicio`);
+const botonReglas = document.querySelector(`#botonReglas`)
 const botonReinicio = document.querySelector (`#botonReinicio`);
 const cartasCasino = document.querySelector (`#cartasCasino`);
 const cartasJugador = document.querySelector (`#cartasJugador`);
@@ -79,6 +80,7 @@ const inicioJuego = () => {
     botones.style.border = "10px solid #E6BF25";
     botonInicio.style.display = "block";
     botonRanking.style.display = "block";
+    botonReglas.style.display = "block";
 }
 
 //Funcion que inicializa el juego
@@ -318,9 +320,20 @@ botonInicio.onclick = () => {
     arrayCartasJugador = [];
 
 };
+botonReglas.onclick =() => {
+    Swal.fire({
+        title: 'White Jack',
+        html: '<p class="popUp">El principal objetivo del juego es ganarle al Casino. Cómo lo haces? Muy fácil, obteniendo una mano que sea mas alta que la de la banca, pero que sea menor a 21. O bien, puedes ganar con una puntuación inferior a 22 cuando la mano de la banca supera los 21 puntos.<br>Cuando el valor total de tu mano es de 22 o más, esto se conoce comúnmente como "bancarrota", y automáticamente perderás.Cuando se te indique, puedes pedir cartas para tu mano, para incrementar el valor total. Mientras vas agregando cartas a tu mano, la banca completará su mano.<br>No es para sorprenderse que la mejor mano en el Whitejack se conozca como "Whitejack" que es cuando tus cartas o las de la banca suman 21. </p>',
+        background: '#335918',
+        color: '#fff',
+        confirmButtonColor: '#000',
+        confirmButtonText:  'Ya se jugar!',
+    })
+}
 botonRanking.onclick = () => {
     informeFinal (historialJugadas);
-}
+};
+
 
 
 

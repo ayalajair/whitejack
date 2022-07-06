@@ -5,7 +5,6 @@ html, body {
 
 body {
   background-color: #335918;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-items: center;
@@ -89,6 +88,7 @@ li {
 
 #mesa {
   display: none;
+  height: 100% vh;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -167,12 +167,12 @@ button {
   align-items: center;
 }
 
-.swal2-popup {
-  background-color: #335918;
-}
-
 #volverHistorial {
   display: none;
+}
+
+.popUp {
+  font-size: small;
 }
 
 
