@@ -113,7 +113,7 @@ historialJugadas.push (jugada1);
 //Se guarda el historial el el LocalStorage
 localStorage.setItem('historialJugadas', JSON.stringify(historialJugadas));
 };
-
+//******************************Funcion que borra las cartas de pantalla******************************** */
 const borrarCartas = () => {
     cartasJugador.innerHTML = ``;
     cartasCasino.innerHTML= ``;
@@ -203,11 +203,18 @@ const imprimeCarta = (card) => {
     <div id="carta" class="marcoCarta">
     <div class="fondoCarta">
         <div class="fondoNumero">
-            <h3 class="numeroCarta">${carta}</h3>
+            <h3 class="numeroCarta">${card}</h3>
         </div>
     </div>
     </div>`
     return contenedorCarta
+}
+//***********************************Funcion que genera la carta***************************** */
+const sacaCarta = (turno) => {
+    let carta = Math.floor((Math.random()*10)+1);
+    turno == 1? cartasCasino.appendChild(imprimeCarta(carta)) : cartasJugador.appendChild(imprimeCarta(carta));
+    turno =" "
+    return carta
 }
 //***********************************Función Retira************************************************************************ */
 //Función para ver si el jugador se retira o no.
@@ -215,33 +222,28 @@ const retira = (sumavos, sumamesa) => {
         seguirJugando.innerHTML =  `<p>Tenés ${sumavos} puntos, la casa tiene ${sumamesa}, querés sacar otra carta? </p>`
         botonSi.style.display = "inline";
         botonNo.style.display = "inline";
-       // let retirar;
-    //    while (retirar) {
-            botonSi.onclick = () => {
-                botonSi.style.display = "none";
-                botonNo.style.display = "none";
-                juego();
-                };
-            botonNo.onclick = () => {
-                botonSi.style.display = "none";
-                botonNo.style.display = "none";
-                while (sumamesa < 17){
-                    carta = Math.floor((Math.random()*10)+1);
-                    cartasCasino.appendChild (imprimeCarta(carta));
-                    sumamesa = carta + sumamesa
-                    arrayCartasCasino.push (carta);                    
-                }
-                seguirJugando.innerHTML =  `<p>Tenés ${sumavos} puntos, la casa sacó ${sumamesa}</p>`
-                const resultado = whiteJack(sumavos, sumamesa);
-                resultadoFinal.innerHTML = `<h3>${resultado}</h3>`;
-                cargaJugada(usuario, contadorCartas, sumadorCartasJugador)
+        botonSi.onclick = () => {
+            botonSi.style.display = "none";
+            botonNo.style.display = "none";
+            juego();
+            };
+        botonNo.onclick = () => {
+            botonSi.style.display = "none";
+            botonNo.style.display = "none";
+            while (sumamesa < 17){
+                sumamesa += sacaCarta(1); 
+                //arrayCartasCasino.push (carta);                    
+            }
+            seguirJugando.innerHTML =  `<p>Tenés ${sumavos} puntos, la casa sacó ${sumamesa}</p>`
+            const resultado = whiteJack(sumavos, sumamesa);
+            resultadoFinal.innerHTML = `<h3>${resultado}</h3>`;
+            cargaJugada(usuario, contadorCartas, sumadorCartasJugador)
                 
-                contadorCartas = 0;
-                sumadorCartasJugador = 0;
-                sumadorCartasCasino = 0;
-                terminar();
+            contadorCartas = 0;
+            sumadorCartasJugador = 0;
+            sumadorCartasCasino = 0;
+            terminar();
             };   
-      //  }
 };
 
 
@@ -268,29 +270,21 @@ const whiteJack = (sumaJugador, sumaCasa)=> {
 const juego = ()=> {
     mesa.style.display = "flex";
     if (primeraVez){
-        carta = Math.floor((Math.random()*10)+1);
-        cartasCasino.appendChild (imprimeCarta(carta));
-        sumadorCartasCasino = carta + sumadorCartasCasino
-        arrayCartasCasino.push (carta);
-        carta = Math.floor((Math.random()*10)+1);
-        cartasJugador.appendChild (imprimeCarta(carta));
-        arrayCartasJugador.push (carta);
+        sumadorCartasCasino += sacaCarta(1);
+        //arrayCartasCasino.push (carta);
+        sumadorCartasJugador += sacaCarta(2);
         contadorCartas ++;
-        sumadorCartasJugador = carta + sumadorCartasJugador;
+        //arrayCartasJugador.push (carta);
         primeraVez = false;
     }
     if (sumadorCartasCasino<=17) {
-        carta = Math.floor((Math.random()*10)+1);
-        cartasCasino.appendChild (imprimeCarta(carta));
-        sumadorCartasCasino = carta + sumadorCartasCasino
-        arrayCartasCasino.push (carta);
+        sumadorCartasCasino += sacaCarta(1);
+        //arrayCartasCasino.push (carta);
     }
     if (terminaJugador){
-        carta = Math.floor((Math.random()*10)+1);
-        cartasJugador.appendChild (imprimeCarta(carta));
-        arrayCartasJugador.push (carta);
+        sumadorCartasJugador += sacaCarta(2);
         contadorCartas ++;
-        sumadorCartasJugador = carta + sumadorCartasJugador;
+        //arrayCartasJugador.push (carta);
     }
     if (sumadorCartasJugador >= 21 ){
         resultado = whiteJack(sumadorCartasJugador, sumadorCartasCasino);
