@@ -43,6 +43,9 @@ const volverHistorial = document.querySelector (`#volverHistorial`);
 const botones = document.querySelector (`#botones`);
 const jugadas = document.querySelector (`#jugadas`);
 const ganados = document.querySelector (`#ganados`);
+const inicio = document.querySelector (`#inicio`)
+const botonNoSoy = document.querySelector (`#botonNoSoy`);
+
 
 //Array que contendrá el historial de jugadas, primero se consulta en el LocalStorage si habia algo guardado anteriormente.
 const historialJugadas =JSON.parse(localStorage.getItem(`historialJugadas`)) ||[];
@@ -81,6 +84,7 @@ const inicioJuego = () => {
     botonInicio.style.display = "block";
     botonRanking.style.display = "block";
     botonReglas.style.display = "block";
+    botonNoSoy.style.display = "block";
 }
 
 //Funcion que inicializa el juego
@@ -132,10 +136,11 @@ const borrarHistorial = () => {
 //************************************************Funcion informeFinal***********************************************************
 //Función que realiza el informe final del total de las partidas
 const informeFinal = (informe)=> {
-//Se cuenta cuantas veces el jugador ganó y se informa
 botones.style.border = "none";
 botonInicio.style.display= "none";
+botonNoSoy.style.display= "none";
 botonRanking.style.display= "none";
+botonReglas.style.display= "none";
 tituloHistorial.innerHTML = (`Historial de Jugadas: `);
 volverHistorial.style.display = "block";
 volverHistorial.onclick = ()=> borrarHistorial ();
@@ -313,6 +318,7 @@ botonInicio.onclick = () => {
     botones.style.border = "none";
     botonInicio.style.display = "none";
     botonRanking.style.display= "none";
+    botonReglas.style.display= "none";
         terminaJugador = true;
         terminaMesa = true;
         juego ();    
@@ -333,6 +339,19 @@ botonReglas.onclick =() => {
 botonRanking.onclick = () => {
     informeFinal (historialJugadas);
 };
+
+
+botonNoSoy.onclick = () => {
+    localStorage.clear ();
+    ingreso.style.display= "flex"; 
+    botonRanking.style.display = "none";
+    botonInicio.style.display = "none";
+    botones.style.display = "none";
+    botones.style.border = "none";
+    bienvenida.innerHTML = ``;
+}
+
+
 
 
 
