@@ -13,12 +13,11 @@ let sumadorCartasJugador = 0;
 let sumadorCartasCasino = 0;
 let contadorCartas= 0;
 let carta;
-let arrayCartasJugador = [];
-let arrayCartasCasino = [];
 let usuario = JSON.parse(localStorage.getItem(`usuario`))
 let terminaMesa;
 let terminaJugador
 let primeraVez = true ;
+let jugadasViejas = [];
 
 //**************************************DOM*****************************************************************************************
 const ingreso = document.querySelector (`#ingreso`);
@@ -137,19 +136,14 @@ const insertarJugadasViejasAsync = async () => {
     try {
         const respuesta = await fetch(`./rankingviejo.json`);
         const resultados = await respuesta.json();
-        const jugadasViejas = resultados.jugadas
-        for (element of jugadasViejas) {
-            let jugada = document.createElement (`li`);
-            jugada.innerHTML = `En esta jugada ${element.resumen}`
-            jugadas.append(jugada);
-        }
+        return jugadasViejas = resultados.jugadas
     } catch {
     alert('No se pudieron cargar jugadas anteriores');
     }}
 
 //************************************************Funcion informeFinal***********************************************************
 //Función que realiza el informe final del total de las partidas
-const informeFinal = (informe)=> {
+const informeFinal = (informe, informeViejo)=> {
 botones.style.border = "none";
 botonInicio.style.display= "none";
 botonNoSoy.style.display= "none";
@@ -158,7 +152,11 @@ botonReglas.style.display= "none";
 tituloHistorial.innerHTML = (`Historial de Jugadas: `);
 volverHistorial.style.display = "block";
 volverHistorial.onclick = ()=> borrarHistorial ();
-insertarJugadasViejasAsync();
+for (element of informeViejo) {
+    let jugada = document.createElement (`li`);
+    jugada.innerHTML = `En esta jugada ${element.resumen}`
+    jugadas.append(jugada);
+}
 for (element of informe) {
     let jugada = document.createElement (`li`);
     jugada.innerHTML = `En esta jugada ${element.resumen}`
@@ -258,8 +256,7 @@ const retira = (sumavos, sumamesa) => {
             botonSi.style.display = "none";
             botonNo.style.display = "none";
             while (sumamesa < 17){
-                sumamesa += sacaCarta(1); 
-                //arrayCartasCasino.push (carta);                    
+                sumamesa += sacaCarta(1);                  
             }
             seguirJugando.innerHTML =  `<p>Tenés ${sumavos} puntos, la casa sacó ${sumamesa}</p>`
             const resultado = whiteJack(sumavos, sumamesa);
@@ -298,20 +295,16 @@ const juego = ()=> {
     mesa.style.display = "flex";
     if (primeraVez){
         sumadorCartasCasino += sacaCarta(1);
-        //arrayCartasCasino.push (carta);
         sumadorCartasJugador += sacaCarta(2);
         contadorCartas ++;
-        //arrayCartasJugador.push (carta);
         primeraVez = false;
     }
     if (sumadorCartasCasino<=17) {
         sumadorCartasCasino += sacaCarta(1);
-        //arrayCartasCasino.push (carta);
     }
     if (terminaJugador){
         sumadorCartasJugador += sacaCarta(2);
-        contadorCartas ++;
-        //arrayCartasJugador.push (carta);
+        contadorCartas ++;;
     }
     if (sumadorCartasJugador >= 21 ){
         resultado = whiteJack(sumadorCartasJugador, sumadorCartasCasino);
@@ -329,6 +322,7 @@ const juego = ()=> {
 
 //Programa principal
 bienvenidaUsuario ();
+insertarJugadasViejasAsync();
 botonInicio.onclick = () => {
     botones.style.border = "none";
     botonInicio.style.display = "none";
@@ -353,7 +347,8 @@ botonReglas.onclick =() => {
     })
 }
 botonRanking.onclick = () => {
-    informeFinal (historialJugadas);
+    insertarJugadasViejasAsync();
+    informeFinal (historialJugadas, jugadasViejas);
 };
 
 
