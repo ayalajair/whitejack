@@ -55,7 +55,7 @@ class Jugada {
         this.usuario = usuario;
         this.cantCartas = cantCartas;
         this.puntaje = puntaje;
-//por defecto queda como que el usuario perdió
+//por defecto queda como que el usuario se retiró
         this.resultado="Se retiró";
         this.resumen
     }
@@ -63,10 +63,10 @@ class Jugada {
 //Metodo que se fija si el Usuario perdio o no, hay que ejecutar antes de guardar en el array
     esWhiteJack() {
         if (this.puntaje === 21){
-        this.resultado = "¡Ganó!";
+        this.resultado = "sacó White Jack";
         }
         else if (this.puntaje >= 21){
-            this.resultado = "No hizo WhiteJack";
+            this.resultado = "perdió";
         };
     };
     jugadas () {
@@ -116,7 +116,7 @@ jugada1.esWhiteJack();
 jugada1.resumen = jugada1.jugadas();
 //Se guarda el objeto en el array
 historialJugadas.push (jugada1);
-//Se guarda el historial el el LocalStorage
+//Se guarda el historial en el LocalStorage
 localStorage.setItem('historialJugadas', JSON.stringify(historialJugadas));
 };
 //******************************Funcion que borra las cartas de pantalla******************************** */
@@ -132,6 +132,20 @@ const borrarHistorial = () => {
     ganados.innerHTML=(``)
     volverHistorial.style.display = "none";
 }
+//**************************************Función que realiza el Fetch*********************************************** */
+const insertarJugadasViejasAsync = async () => {
+    try {
+        const respuesta = await fetch(`./rankingviejo.json`);
+        const resultados = await respuesta.json();
+        const jugadasViejas = resultados.jugadas
+        for (element of jugadasViejas) {
+            let jugada = document.createElement (`li`);
+            jugada.innerHTML = `En esta jugada ${element.resumen}`
+            jugadas.append(jugada);
+        }
+    } catch {
+    alert('No se pudieron cargar jugadas anteriores');
+    }}
 
 //************************************************Funcion informeFinal***********************************************************
 //Función que realiza el informe final del total de las partidas
@@ -144,6 +158,7 @@ botonReglas.style.display= "none";
 tituloHistorial.innerHTML = (`Historial de Jugadas: `);
 volverHistorial.style.display = "block";
 volverHistorial.onclick = ()=> borrarHistorial ();
+insertarJugadasViejasAsync();
 for (element of informe) {
     let jugada = document.createElement (`li`);
     jugada.innerHTML = `En esta jugada ${element.resumen}`
@@ -319,6 +334,7 @@ botonInicio.onclick = () => {
     botonInicio.style.display = "none";
     botonRanking.style.display= "none";
     botonReglas.style.display= "none";
+    botonNoSoy.style.display= "none";
         terminaJugador = true;
         terminaMesa = true;
         juego ();    
