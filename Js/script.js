@@ -78,6 +78,7 @@ class Jugada {
 
 //Funcion que genera el boton de inicio del juego
 const inicioJuego = () => {
+    botones.style.margin = "10%";
     botones.style.display = "flex";
     botones.style.border = "10px solid #E6BF25";
     botonInicio.style.display = "block";
@@ -144,6 +145,7 @@ const insertarJugadasViejasAsync = async () => {
 //************************************************Funcion informeFinal***********************************************************
 //Función que realiza el informe final del total de las partidas
 const informeFinal = (informe, informeViejo)=> {
+botones.style.margin = "0";
 botones.style.border = "none";
 botonInicio.style.display= "none";
 botonNoSoy.style.display= "none";
@@ -324,6 +326,7 @@ const juego = ()=> {
 bienvenidaUsuario ();
 insertarJugadasViejasAsync();
 botonInicio.onclick = () => {
+    botones.style.margin = "0";
     botones.style.border = "none";
     botonInicio.style.display = "none";
     botonRanking.style.display= "none";
@@ -355,6 +358,7 @@ botonRanking.onclick = () => {
 botonNoSoy.onclick = () => {
     localStorage.clear ();
     ingreso.style.display= "flex"; 
+    botones.style.margin = "0";
     botonRanking.style.display = "none";
     botonInicio.style.display = "none";
     botones.style.display = "none";
