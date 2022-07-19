@@ -50,12 +50,12 @@ const botonNoSoy = document.querySelector (`#botonNoSoy`);
 const historialJugadas =JSON.parse(localStorage.getItem(`historialJugadas`)) ||[];
 //Clase de los objetos que se almacenarán en el Array
 class Jugada {
-    constructor (usuario,cantCartas,puntaje){
+    constructor (usuario,cantCartas,puntaje, resultado){
         this.usuario = usuario;
         this.cantCartas = cantCartas;
         this.puntaje = puntaje;
 //por defecto queda como que el usuario se retiró
-        this.resultado="Se retiró";
+        this.resultado = resultado;
         this.resumen
     }
 
@@ -108,9 +108,9 @@ const bienvenidaUsuario = () => {
 
 //***********************************Funcion cargaJugada***************************************************************************** */
 
-const cargaJugada = (u, contCard, sumCard) => {
+const cargaJugada = (u, contCard, sumCard, resul) => {
     //Se crea un objeto con los datos de la jugada
-const jugada1 = new Jugada (u, contCard, sumCard);
+const jugada1 = new Jugada (u, contCard, sumCard, resul);
 //Se llama al método para guardar si se ganó o no
 jugada1.esWhiteJack();
 jugada1.resumen = jugada1.jugadas();
@@ -243,6 +243,25 @@ const sacaCarta = (turno) => {
     turno =" "
     return carta
 }
+
+//****************************************Función para decir si se ganó o no
+const whiteJack = (sumaJugador, sumaCasa)=> { 
+    seguirJugando.innerHTML =  `<p>Sacaste ${sumaJugador} puntos, la casa tiene ${sumaCasa} puntos</p>` 
+    if (sumaJugador>21)
+        return "¡Perdiste!"
+    else if ((sumaJugador===21) && (sumaCasa !== 21) ) 
+        return "¡Ganaste! ¡White Jack!";
+    else if ((sumaJugador===21) && (sumaCasa === 21)) 
+        return "¡Empate!";
+    else if ((sumaJugador !== 21) && (sumaCasa === 21))
+        return "¡Perdiste!";
+    else if ((sumaJugador<21) && (sumaCasa > 21)) 
+        return "¡Ganaste!";
+    else if (sumaJugador>sumaCasa)
+        return "¡Ganaste!";
+    else 
+        return "¡Perdiste!";
+};
 //***********************************Función Retira************************************************************************ */
 //Función para ver si el jugador se retira o no.
 const retira = (sumavos, sumamesa) => {
@@ -263,7 +282,7 @@ const retira = (sumavos, sumamesa) => {
             seguirJugando.innerHTML =  `<p>Tenés ${sumavos} puntos, la casa sacó ${sumamesa}</p>`
             const resultado = whiteJack(sumavos, sumamesa);
             resultadoFinal.innerHTML = `<h3>${resultado}</h3>`;
-            cargaJugada(usuario, contadorCartas, sumadorCartasJugador)
+            cargaJugada(usuario, contadorCartas, sumadorCartasJugador, resultado)
                 
             contadorCartas = 0;
             sumadorCartasJugador = 0;
@@ -272,25 +291,6 @@ const retira = (sumavos, sumamesa) => {
             };   
 };
 
-
-//Función para decir si se ganó o no
-const whiteJack = (sumaJugador, sumaCasa)=> { 
-    seguirJugando.innerHTML =  `<p>Sacaste ${sumaJugador} puntos, la casa tiene ${sumaCasa} puntos</p>` 
-    if (sumaJugador>21)
-        return "¡Perdiste!"
-    else if ((sumaJugador===21) && (sumaCasa !== 21) ) 
-        return "¡Ganaste! ¡White Jack!";
-    else if ((sumaJugador===21) && (sumaCasa === 21)) 
-        return "¡Empate!";
-    else if ((sumaJugador !== 21) && (sumaCasa === 21))
-        return "¡Perdiste!";
-    else if ((sumaJugador<21) && (sumaCasa > 21)) 
-        return "¡Ganaste!";
-    else if (sumaJugador>sumaCasa)
-        return "¡Ganaste!";
-    else 
-        return "¡Perdiste!";
-};
 
 //Funcion del Juego 
 const juego = ()=> {
@@ -311,7 +311,7 @@ const juego = ()=> {
     if (sumadorCartasJugador >= 21 ){
         resultado = whiteJack(sumadorCartasJugador, sumadorCartasCasino);
         resultadoFinal.innerHTML = `<h3>${resultado}</h3>`;
-        cargaJugada(usuario, contadorCartas, sumadorCartasJugador);
+        cargaJugada(usuario, contadorCartas, sumadorCartasJugador,resultado);
         contadorCartas = 0;
         sumadorCartasJugador = 0;
         sumadorCartasCasino = 0;
@@ -339,6 +339,7 @@ botonInicio.onclick = () => {
     arrayCartasJugador = [];
 
 };
+//boton que muestra las reglas del juego
 botonReglas.onclick =() => {
     Swal.fire({
         title: 'White Jack',
@@ -349,16 +350,18 @@ botonReglas.onclick =() => {
         confirmButtonText:  'Ya se jugar!',
     })
 }
+//boton que muestra el historial de jugadas
 botonRanking.onclick = () => {
     insertarJugadasViejasAsync();
     informeFinal (historialJugadas, jugadasViejas);
 };
 
-
+//boton para cambiar de usuario
 botonNoSoy.onclick = () => {
     localStorage.clear ();
     ingreso.style.display= "flex"; 
     botones.style.margin = "0";
+    botones.style.border = "none";
     botonRanking.style.display = "none";
     botonInicio.style.display = "none";
     botones.style.display = "none";

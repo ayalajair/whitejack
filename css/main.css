@@ -46,6 +46,25 @@ p {
   font-size: 0.8em; 
   display: block;
 }
+
+.botonForm{
+  display: flex;
+  justify-content: center;
+}
+fieldset {
+  padding: 10px;
+  background-color: #335918;
+  border-radius: 20px;
+  box-shadow:2px 2px 3px #000,2px 2px 3px #000; 
+}
+label {
+  font-family: "cabin", sans-serif;
+  color: #fff;
+  text-shadow: 2px 2px 3px #000,2px 2px 3px #000;
+  font-size: 1.2em; 
+  display: block;
+}
+
 #rondas {
   text-align: center;
 }
@@ -73,6 +92,8 @@ li {
 }
 #botones {
   display: none;
+  background-color: #335918;
+  box-shadow:2px 2px 3px #000,2px 2px 3px #000; 
   align-self: center;
   justify-self: center;
   flex-direction: column;
@@ -115,6 +136,7 @@ button {
   margin: 3px 0;
   align-self: center;
   width: fit-content;
+  box-shadow:2px 2px 3px #000,2px 2px 3px #000; 
   background-color: #000;
   color: #fff;
   border: 2px solid #fff;
@@ -139,6 +161,7 @@ button {
   flex-wrap: wrap;
   border-radius: 20px;
   border: 10px solid #E6BF25;
+  box-shadow:2px 2px 3px #000,2px 2px 3px #000; 
 }
 
 .marcoCarta {
