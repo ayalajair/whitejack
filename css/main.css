@@ -60,6 +60,7 @@ p {
 fieldset {
   padding: 10px;
   background-color: #335918;
+  border: 10px solid #E6BF25;
   border-radius: 20px;
   box-shadow:2px 2px 3px #000,
 }
@@ -163,6 +164,10 @@ button {
   border-radius: 5px;
 }
 
+.terminar {
+  margin: 15px;
+}
+
 #ranking {
   align-self: center;
   background-color: #335918;
@@ -178,7 +183,7 @@ button {
 }
 
 .mano {
-  width: 60%;
+  width: 70%;
   height: 160px;
   margin-top: 10px;
   display: flex;
@@ -257,7 +262,25 @@ button {
 }
 
 
+@media only screen and (min-device-width : 768px) {
+  body {
+    height: 1000px;
+  }
+  .whitejack {
+    margin: 30px;
+  }
 
+
+
+
+
+
+
+
+
+
+
+  }
 
 
 
