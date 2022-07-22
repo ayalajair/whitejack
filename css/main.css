@@ -11,19 +11,31 @@ body {
   flex-direction: column;
   justify-items: center;
   border: 10px solid #E6BF25;
+
   border-radius: 15px;
 }
 
 h1 {
   font-family: "cabin", sans-serif;
   color: #fff;
-  text-shadow: 2px 2px 3px #000,2px 2px 3px #000;
-  font-size: 2em; 
+  text-shadow: 2px 2px 3px #000;
+  font-size: 2em;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+  border: none; 
+  text-decoration: normal;
+  text-align: center;
+  -o-text-overflow: clip;
+  text-overflow: clip;
+  white-space: pre;
+  text-shadow: 0 0 10px #fff;
 }
 h2 {
   font-family: "cabin", sans-serif;
   color: #fff;
-  text-shadow: 2px 2px 3px #000,2px 2px 3px #000;
+  text-shadow: 2px 2px 3px #000;
   font-size: 1.5em; 
   margin: 4px;
   display: block;
@@ -33,7 +45,7 @@ h3 {
   text-align: center;
   font-family: "cabin", sans-serif;
   color: #fff;
-  text-shadow: 2px 2px 3px #000,2px 2px 3px #000;
+  text-shadow: 2px 2px 3px #000;
   font-size: 1.2em; 
   display: block;
 }
@@ -42,7 +54,7 @@ p {
   font-family: 'Open Sans', sans-serif;
   text-align: center;
   color: #fff;
-  text-shadow: 2px 2px 3px #000,2px 2px 3px #000;
+  text-shadow: 2px 2px 3px #000;
   font-size: 0.8em; 
   display: block;
 }
@@ -55,12 +67,12 @@ fieldset {
   padding: 10px;
   background-color: #335918;
   border-radius: 20px;
-  box-shadow:2px 2px 3px #000,2px 2px 3px #000; 
+  box-shadow:2px 2px 3px #000,
 }
 label {
   font-family: "cabin", sans-serif;
   color: #fff;
-  text-shadow: 2px 2px 3px #000,2px 2px 3px #000;
+  text-shadow: 2px 2px 3px #000;
   font-size: 1.2em; 
   display: block;
 }
@@ -74,7 +86,7 @@ label {
   text-align: center;
   font-family: 'Open Sans', sans-serif;
   color: #fff;
-  text-shadow: 2px 2px 3px #000,2px 2px 3px #000;
+  text-shadow: 2px 2px 3px #000;
   font-size: 1em; 
   display: block;
 }
@@ -83,7 +95,7 @@ li {
   font-family: 'Open Sans', sans-serif;
   text-align: center;
   color: #fff;
-  text-shadow: 2px 2px 3px #000,2px 2px 3px #000;
+  text-shadow: 2px 2px 3px #000;
   font-size: 0.8em; 
 }
 #titulo , #ingreso {
@@ -93,7 +105,7 @@ li {
 #botones {
   display: none;
   background-color: #335918;
-  box-shadow:2px 2px 3px #000,2px 2px 3px #000; 
+  box-shadow:2px 2px 3px #000; 
   align-self: center;
   justify-self: center;
   flex-direction: column;
@@ -114,6 +126,7 @@ li {
 }
 .bienvenida {
   text-align: center;
+  text-shadow: 0 0 10px #fff;
 }
 
 #mesa {
@@ -125,10 +138,12 @@ li {
 }
 
 .whitejack {
+  margin-top: 20px;
   padding: 3px 10px;
   background-color: #000;
   border-radius: 10px;
-  border: 5px dashed #E6BF25;
+  border: 5px solid #E6BF25;
+  box-shadow: 0 0 10px #E6BF25, 0 0 20px #E6BF25, inset 0 0 5px #E6BF25;
 }
 
 button {
@@ -136,7 +151,7 @@ button {
   margin: 3px 0;
   align-self: center;
   width: fit-content;
-  box-shadow:2px 2px 3px #000,2px 2px 3px #000; 
+  box-shadow:0 0 3px #fff, inset 0 0 3px #fff; 
   background-color: #000;
   color: #fff;
   border: 2px solid #fff;
@@ -144,10 +159,17 @@ button {
 }
 
 #ranking {
-  display: flex;
+  align-self: center;
+  background-color: #335918;
+  width: 90%;
+  margin: 5px;
+  display: none;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border-radius: 20px;
+  border: 10px solid #E6BF25;
+  box-shadow:2px 2px 3px #000,2px 2px 3px #000;
 }
 
 .mano {
@@ -218,6 +240,10 @@ button {
 }
 
 .popUp {
+  padding: 10px;
+  border-radius: 20px;
+  border: 10px solid #E6BF25;
+  box-shadow:2px 2px 3px #000,2px 2px 3px #000;
   font-size: small;
 }
 

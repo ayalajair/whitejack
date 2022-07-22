@@ -34,6 +34,7 @@ const botonNo = document.querySelector (`#botonNo`);
 const resultadoFinal = document.querySelector (`#resultadoFinal`);
 const botonSeguir = document.querySelector (`#seguir`);
 const botonTerminar = document.querySelector (`#terminar`);
+const ranking = document.querySelector (`#ranking`)
 const verRanking = document.querySelector (`#verRanking`);
 const botonRanking = document.querySelector (`#botonRanking`);
 const mesa = document.querySelector (`#mesa`);
@@ -60,14 +61,6 @@ class Jugada {
     }
 
 //Metodo que se fija si el Usuario perdio o no, hay que ejecutar antes de guardar en el array
-    esWhiteJack() {
-        if (this.puntaje === 21){
-        this.resultado = "sacó White Jack";
-        }
-        else if (this.puntaje >= 21){
-            this.resultado = "perdió";
-        };
-    };
     jugadas () {
         return `${this.usuario} sacó ${this.cantCartas} cartas, sumó ${this.puntaje} y ${this.resultado}`;
     }
@@ -112,7 +105,6 @@ const cargaJugada = (u, contCard, sumCard, resul) => {
     //Se crea un objeto con los datos de la jugada
 const jugada1 = new Jugada (u, contCard, sumCard, resul);
 //Se llama al método para guardar si se ganó o no
-jugada1.esWhiteJack();
 jugada1.resumen = jugada1.jugadas();
 //Se guarda el objeto en el array
 historialJugadas.push (jugada1);
@@ -129,7 +121,8 @@ const borrarHistorial = () => {
     inicioJuego ();
     tituloHistorial.innerHTML= (``);
     jugadas.innerHTML=(``);
-    ganados.innerHTML=(``)
+    ganados.innerHTML=(``);
+    ranking.style.display="none";
     volverHistorial.style.display = "none";
 }
 //**************************************Función que realiza el Fetch*********************************************** */
@@ -145,12 +138,12 @@ const insertarJugadasViejasAsync = async () => {
 //************************************************Funcion informeFinal***********************************************************
 //Función que realiza el informe final del total de las partidas
 const informeFinal = (informe, informeViejo)=> {
-botones.style.margin = "0";
-botones.style.border = "none";
+botones.style.display = "none";
 botonInicio.style.display= "none";
 botonNoSoy.style.display= "none";
 botonRanking.style.display= "none";
 botonReglas.style.display= "none";
+ranking.style.display="flex";
 tituloHistorial.innerHTML = (`Historial de Jugadas: `);
 volverHistorial.style.display = "block";
 volverHistorial.onclick = ()=> borrarHistorial ();
@@ -168,13 +161,8 @@ for (element of informe) {
 const ganadas = informe.filter(jugada => jugada.puntaje === 21);
 const ganados = document.querySelector (`#ganados`);
 const cuentaJuegos = document.createElement (`p`);
-cuentaJuegos.innerHTML = `Ganaste ${ganadas.length} juego/s`;
+cuentaJuegos.innerHTML = `Se ganaron ${ganadas.length} juego/s`;
 ganados.append (cuentaJuegos);
-//Se suman todos los puntajes de las jugadas, se guardan en un array y se informan
-const totalPuntaje = informe.reduce((total, jugada) => total + jugada.puntaje,0);
-const muestraPuntaje = document.createElement (`h3`);
-muestraPuntaje.innerHTML = `Sumaste ${totalPuntaje} puntos`;
-ganados.append (muestraPuntaje);
 }
 
 //**********************************Función terminar*************************************************************************** */
@@ -248,19 +236,75 @@ const sacaCarta = (turno) => {
 const whiteJack = (sumaJugador, sumaCasa)=> { 
     seguirJugando.innerHTML =  `<p>Sacaste ${sumaJugador} puntos, la casa tiene ${sumaCasa} puntos</p>` 
     if (sumaJugador>21)
-        return "¡Perdiste!"
-    else if ((sumaJugador===21) && (sumaCasa !== 21) ) 
-        return "¡Ganaste! ¡White Jack!";
-    else if ((sumaJugador===21) && (sumaCasa === 21)) 
-        return "¡Empate!";
+        {Swal.fire({
+            icon: 'error',
+            title: 'Perdiste',
+            text: '¡Mejor suerte la próxima!',
+            background: '#335918',
+            color: '#fff',
+            confirmButtonColor: '#000',
+        })
+        return "¡Perdió!"}
+    else if ((sumaJugador===21) && (sumaCasa !== 21) )
+        {Swal.fire({
+            icon: 'success',
+            title: 'White Jack',
+            text: '¡Felicidades!',
+            background: '#335918',
+            color: '#fff',
+            confirmButtonColor: '#000',
+        })
+        return "¡Sacó White Jack!"}
+    else if ((sumaJugador===21) && (sumaCasa === 21))
+        {Swal.fire({
+            icon: 'warning',
+            title: '¡Empate!',
+            text: 'No es el mejor resultado, pero al menos no perdiste',
+            background: '#335918',
+            color: '#fff',
+            confirmButtonColor: '#000',
+        })
+        return "Empató"}
     else if ((sumaJugador !== 21) && (sumaCasa === 21))
-        return "¡Perdiste!";
-    else if ((sumaJugador<21) && (sumaCasa > 21)) 
-        return "¡Ganaste!";
+        {Swal.fire({
+            icon: 'error',
+            title: 'Perdiste',
+            text: '¡Mejor suerte la próxima!',
+            background: '#335918',
+            color: '#fff',
+            confirmButtonColor: '#000',
+        })
+        return "¡Perdió!"}
+    else if ((sumaJugador<21) && (sumaCasa > 21))
+        {Swal.fire({
+            icon: 'success',
+            title: 'Ganaste',
+            text: '¡Felicidades!',
+            background: '#335918',
+            color: '#fff',
+            confirmButtonColor: '#000',
+        })
+    return "¡Ganó!"} 
     else if (sumaJugador>sumaCasa)
-        return "¡Ganaste!";
-    else 
-        return "¡Perdiste!";
+        {Swal.fire({
+            con: 'success',
+            title: 'Ganaste',
+            text: '¡Felicidades!',
+            background: '#335918',
+            color: '#fff',
+            confirmButtonColor: '#000',
+        })
+        return "¡Ganó!"}
+    else
+        {Swal.fire({
+            icon: 'error',
+            title: 'Perdiste',
+            text: '¡Mejor suerte la próxima!',
+            background: '#335918',
+            color: '#fff',
+            confirmButtonColor: '#000',
+        })
+        return "¡Perdió!"}     
 };
 //***********************************Función Retira************************************************************************ */
 //Función para ver si el jugador se retira o no.
@@ -310,7 +354,6 @@ const juego = ()=> {
     }
     if (sumadorCartasJugador >= 21 ){
         resultado = whiteJack(sumadorCartasJugador, sumadorCartasCasino);
-        resultadoFinal.innerHTML = `<h3>${resultado}</h3>`;
         cargaJugada(usuario, contadorCartas, sumadorCartasJugador,resultado);
         contadorCartas = 0;
         sumadorCartasJugador = 0;
@@ -326,8 +369,7 @@ const juego = ()=> {
 bienvenidaUsuario ();
 insertarJugadasViejasAsync();
 botonInicio.onclick = () => {
-    botones.style.margin = "0";
-    botones.style.border = "none";
+    botones.style.display = "none";
     botonInicio.style.display = "none";
     botonRanking.style.display= "none";
     botonReglas.style.display= "none";
