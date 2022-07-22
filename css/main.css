@@ -18,18 +18,12 @@ body {
 h1 {
   font-family: "cabin", sans-serif;
   color: #fff;
-  text-shadow: 2px 2px 3px #000;
   font-size: 2em;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   padding: 10px;
   border: none; 
-  text-decoration: normal;
-  text-align: center;
-  -o-text-overflow: clip;
-  text-overflow: clip;
-  white-space: pre;
   text-shadow: 0 0 10px #fff;
 }
 h2 {
@@ -144,6 +138,17 @@ li {
   border-radius: 10px;
   border: 5px solid #E6BF25;
   box-shadow: 0 0 10px #E6BF25, 0 0 20px #E6BF25, inset 0 0 5px #E6BF25;
+  animation: infinite parpadeo 1s;
+}
+@keyframes parpadeo {
+  0%,60%,100%{
+    text-shadow: 0 0 10px #fff;
+    box-shadow: 0 0 10px #E6BF25, 0 0 20px #E6BF25, inset 0 0 5px #E6BF25;
+  }
+  50%{
+    text-shadow: 0 0 0;
+    box-shadow: 0 0 0;
+  }
 }
 
 button {
