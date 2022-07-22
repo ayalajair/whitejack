@@ -325,7 +325,6 @@ const retira = (sumavos, sumamesa) => {
             }
             seguirJugando.innerHTML =  `<p>Tenés ${sumavos} puntos, la casa sacó ${sumamesa}</p>`
             const resultado = whiteJack(sumavos, sumamesa);
-            resultadoFinal.innerHTML = `<h3>${resultado}</h3>`;
             cargaJugada(usuario, contadorCartas, sumadorCartasJugador, resultado)
                 
             contadorCartas = 0;
