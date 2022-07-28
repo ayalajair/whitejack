@@ -1,12 +1,3 @@
-//El programa es una especie de BlackJack, primero se le pide al usuario que ingrese su nickname o apodo
-//Se le da la bienvenida.
-//Luego se le pide al usuario que saque cartas que estarán entre el 1 y el 10.
-//Se van sumando las cartas y el programa termina cuando se alcanza o se pasa el número 21, o si el usuario se retiró.
-//Luego de terminado el ciclo se informa la cantidad de cartas ingresadas.
-//Si la suma da justo 21, se informa por alerta ¡White Jack!
-//Si se pasa de 21, se informa por alerta: ¡Perdiste!
-//Terminado el juego te pregunta si queres jugar otra vez
-//Si aceptas arranca nuevamente el juego, Si no aceptas te muestra una lista de las jugadas realizadas
 
 //**************************************Variables**********************************************************************************
 let sumadorCartasJugador = 0;

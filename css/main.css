@@ -5,6 +5,8 @@ html, body {
 }
 
 body {
+  background-image: url(../Img/overhead-view-of-red-dices-and-casino-chip-on-green-poker-table.jpg);
+  background-size: cover;
   margin: 10px;
   height: 800px;
   display: flex;
@@ -77,7 +79,7 @@ label {
 }
 #jugadas {
   margin: auto;
-  width: 70% ;
+  width: 80% ;
   text-align: center;
   font-family: 'Open Sans', sans-serif;
   color: #fff;
@@ -121,7 +123,7 @@ li {
 }
 .bienvenida {
   text-align: center;
-  text-shadow: 0 0 10px #fff;
+  text-shadow: 2px 2px 3px #000;
 }
 
 #mesa {
@@ -157,11 +159,14 @@ button {
   margin: 3px 0;
   align-self: center;
   width: fit-content;
-  box-shadow:0 0 3px #fff, inset 0 0 3px #fff; 
   background-color: #000;
   color: #fff;
   border: 2px solid #fff;
   border-radius: 5px;
+}
+button:hover {
+  text-shadow: 0 0 10px #fff;
+  box-shadow:0 0 3px #fff, inset 0 0 3px #fff; 
 }
 
 .terminar {
@@ -183,6 +188,7 @@ button {
 }
 
 .mano {
+  background-color: #335918;
   width: 70%;
   height: 180px;
   margin-top: 10px;
@@ -264,24 +270,74 @@ button {
 
 @media only screen and (min-device-width : 768px) {
   body {
-    height: 1000px;
+    height: 1150px;
   }
   .whitejack {
     margin: 30px;
   }
 
+  #botones {
+    width: 350px;
+  }
+  #inicio {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
 
+  .mano {
+    width: 70%;
+    height: 200px;
+    margin-top: 20px; 
+    margin-bottom: 10px;
+  }
+  
+  .marcoCarta {
+    width: 80px;
+    height: 120px;
+    margin: 5px;
+  }
+  
+  .fondoCarta {
+    width: 75px;
+    height: 110px;
+  }
+  
+  .fondoNumero {
+    width: 75px;
+    height: 110px;
+  }
+  
+  .numeroCarta {
+    font-size: 55px;
+    letter-spacing: -5px;
+    
+  }
+  #ranking {
+    width: 50%;
+    margin: 5px;
 
+  }
+  button {
+    margin: 3px;
+  }
 
-
-
-
-
-
+  }
+  @media only screen and (min-device-width : 1024px){
+    body {
+      height: 800px;
+    }
+    .mano {
+      width: 50%;
+      height: 200px;
+      margin-top: 10px; 
+      margin-bottom: 5px;
+    }
 
 
   }
-
 
 
 
